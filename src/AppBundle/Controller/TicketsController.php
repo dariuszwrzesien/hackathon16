@@ -25,7 +25,6 @@ class TicketsController extends FOSRestController
     public function getTicketsAction()
     {
         $ticket = new Ticket();
-        $ticket->description = 'dasda sdasdas';
 
         return [$ticket];
     }

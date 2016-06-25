@@ -23,7 +23,6 @@ class CategoriesController extends FOSRestController
     public function getCategoriesAction()
     {
         $category = new Category();
-        $category->name = 'asas';
 
         return [$category, $category];
     }

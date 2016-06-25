@@ -1,9 +1,5 @@
 AppBundle\Entity\Category:
     exclusion_policy: ALL
     properties:
-        id:
-            expose: true
-            groups: [details]
-        name:
-            expose: true
-            groups: [details]
+        id: { type: "integer", groups: [details], expose: true }
+        name: { type: "string", groups: [details], expose: true }
