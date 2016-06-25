@@ -46,7 +46,8 @@ class TicketsController extends FOSRestController
      */
     public function getTicketAction($id)
     {
-        $ticket = new Ticket();
+		$repository = $this->getDoctrine()->getRepository('AppBundle\Entity\Ticket');
+		$ticket = $repository->findOneById($id);
 
         return $ticket;
     }

@@ -2,82 +2,214 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
- * @ORM\Entity
+ * Ticket
+ *
+ * @ORM\Table(name="ticket")
+ * @ORM\Entity(repositoryClass="AppBundle\TicketRepository")
  */
-class Ticket {
-
+class Ticket
+{
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    public $id;
+    private $id;
 
     /**
-     * @ORM\Column(type="string", length=250)
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255)
      */
-    public $description;
+    private $description;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime")
      */
-    public $created;
+    private $created;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var int
+     *
+     * @ORM\Column(name="status", type="integer")
      */
-    public $status;
+    private $status;
 
     /**
      * @ORM\Embedded(class="Location")
      */
-    public $location;
+    private $location;
 
     /**
      * @ORM\ManyToOne(targetEntity="Category")
      */
-    public $category;
+    private $category;
 
     /**
      * @ORM\OneToMany(targetEntity="Attachment", mappedBy="ticket")
      */
-    public $attachments;
+    private $attachments;
 
-    public function __construct() {
-        $this->attachments = new ArrayCollection();
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
-    public static function createNewTicket(string $description, Location $location, Category $category) {
-        $ticket = new Ticket();
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Ticket
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
-        $ticket->created = new DateTime();
-        $ticket->description = $description;
-        $ticket->status = Status::WAITING;
-        $ticket->location = $location;
-        $ticket->category = $category;
-
-        return $ticket;
+        return $this;
     }
 
-    public function appendAttachment(Attachment $attachment) {
-        $this->attachments[] = $attachment;
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
-    public function start() {
-        $this->status = Status::IN_PROGRESS;
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return Ticket
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
     }
 
-    public function close() {
-        $this->status = Status::CLOSED;
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
     }
 
-    public function cancel() {
-        $this->cancel = Status::CANCELED;
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Ticket
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set location
+     *
+     * @param \stdClass $location
+     *
+     * @return Ticket
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return \stdClass
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \stdClass $category
+     *
+     * @return Ticket
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \stdClass
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set attachments
+     *
+     * @param \stdClass $attachments
+     *
+     * @return Ticket
+     */
+    public function setAttachments($attachments)
+    {
+        $this->attachments = $attachments;
+
+        return $this;
+    }
+
+    /**
+     * Get attachments
+     *
+     * @return \stdClass
+     */
+    public function getAttachments()
+    {
+        return $this->attachments;
     }
 }
 
