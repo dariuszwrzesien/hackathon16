@@ -51,7 +51,7 @@ class Ticket {
         $this->attachments = new ArrayCollection();
     }
 
-    public function createNewTicket(string $description, Location $location, Category $category) {
+    public static function createNewTicket(string $description, Location $location, Category $category) {
         $ticket = new Ticket();
 
         $ticket->created = new DateTime();
