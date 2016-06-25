@@ -2,13 +2,16 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\TicketRepository;
+use ArrayObject;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Ticket
  *
  * @ORM\Table(name="ticket")
- * @ORM\Entity(repositoryClass="AppBundle\TicketRepository")
+ * @ORM\Entity(repositoryClass="TicketRepository")
  */
 class Ticket
 {
@@ -29,7 +32,7 @@ class Ticket
     private $description;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="created", type="datetime")
      */
@@ -95,11 +98,11 @@ class Ticket
     /**
      * Set created
      *
-     * @param \DateTime $created
+     * @param DateTime $created
      *
      * @return Ticket
      */
-    public function setCreated($created)
+    public function setCreated(DateTime $created)
     {
         $this->created = $created;
 
@@ -109,7 +112,7 @@ class Ticket
     /**
      * Get created
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreated()
     {
@@ -143,11 +146,11 @@ class Ticket
     /**
      * Set location
      *
-     * @param \stdClass $location
+     * @param Location $location
      *
      * @return Ticket
      */
-    public function setLocation($location)
+    public function setLocation(Location $location)
     {
         $this->location = $location;
 
@@ -157,7 +160,7 @@ class Ticket
     /**
      * Get location
      *
-     * @return \stdClass
+     * @return Location
      */
     public function getLocation()
     {
@@ -167,11 +170,11 @@ class Ticket
     /**
      * Set category
      *
-     * @param \stdClass $category
+     * @param Category $category
      *
      * @return Ticket
      */
-    public function setCategory($category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
 
@@ -181,7 +184,7 @@ class Ticket
     /**
      * Get category
      *
-     * @return \stdClass
+     * @return Category
      */
     public function getCategory()
     {
@@ -191,11 +194,11 @@ class Ticket
     /**
      * Set attachments
      *
-     * @param \stdClass $attachments
+     * @param ArrayObject $attachments
      *
      * @return Ticket
      */
-    public function setAttachments($attachments)
+    public function setAttachments(ArrayObject $attachments)
     {
         $this->attachments = $attachments;
 
@@ -205,7 +208,7 @@ class Ticket
     /**
      * Get attachments
      *
-     * @return \stdClass
+     * @return ArrayObject
      */
     public function getAttachments()
     {
