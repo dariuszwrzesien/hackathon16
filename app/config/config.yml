@@ -62,8 +62,8 @@ doctrine:
             AppBundle:
               type: annotation
               is_bundle: false
-              dir: %kernel.root_dir%/../src/AppBundle/
-              prefix: DomainBundle
+              dir: %kernel.root_dir%/../src/AppBundle/Entity
+              prefix: AppBundle
 
 
 # Swiftmailer Configuration

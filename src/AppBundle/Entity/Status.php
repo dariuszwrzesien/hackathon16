@@ -1,6 +1,6 @@
 <?php
 
-namespace DomainBundle;
+namespace AppBundle\Entity;
 
 class Status {
     const WAITING = 1;
