@@ -5,6 +5,10 @@ tickets:
     resource: "@AppBundle/Controller/TicketsController.php"
     type:     rest
     prefix:   /api
+categories:
+    resource: "@AppBundle/Controller/CategoriesController.php"
+    type:     rest
+    prefix:   /api
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc
