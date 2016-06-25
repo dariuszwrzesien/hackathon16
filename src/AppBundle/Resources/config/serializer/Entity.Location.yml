@@ -1,0 +1,5 @@
+AppBundle\Entity\Location:
+    exclusion_policy: ALL
+    properties:
+        latitude: { type: "float", groups: [details], expose: true }
+        longitude: { type: "float", groups: [details], expose: true }
