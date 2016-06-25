@@ -1,0 +1,9 @@
+AppBundle\Entity\Category:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [details]
+        name:
+            expose: true
+            groups: [details]
