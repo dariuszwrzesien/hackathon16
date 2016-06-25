@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Note
+ * Note.
  *
  * @ORM\Table(name="note")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NoteRepository")
@@ -28,9 +28,8 @@ class Note
      */
     private $description;
 
-
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -40,7 +39,7 @@ class Note
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      *
@@ -54,7 +53,7 @@ class Note
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -63,4 +62,3 @@ class Note
         return $this->description;
     }
 }
-
