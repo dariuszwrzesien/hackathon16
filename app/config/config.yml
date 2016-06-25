@@ -59,10 +59,10 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         mappings:
-            DomainBundle:
+            AppBundle:
               type: annotation
               is_bundle: false
-              dir: %kernel.root_dir%/../src/DomainBundle/
+              dir: %kernel.root_dir%/../src/AppBundle/
               prefix: DomainBundle
 
 
