@@ -4,11 +4,13 @@ var webpack = require('webpack');
 module.exports = {
     entry: {
         app: ['./components/app.jsx'],
-        vendor: ['react']
+        vendor: ['react', 'bootstrap-webpack!./bootstrap.config.js']
     },
 
     output: {
-        filename: '../web/app-front/[name].js'
+        path: path.resolve(__dirname, '../web/app-front/'),
+        filename: '[name].js',
+        publicPath: '/web/app-front/'
     },
 
     module: {
@@ -21,6 +23,22 @@ module.exports = {
                 ],
 
                 test: [/\.jsx$/]
+            },
+            {
+                test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url?limit=10000&mimetype=application/font-woff&name=[name].[ext]'
+            },
+            {
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url?limit=10000&mimetype=application/octet-stream&name=[name].[ext]'
+            },
+            {
+                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'file?name=[name].[ext]'
+            },
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url?limit=10000&mimetype=image/svg+xml&name=[name].[ext]'
             }
         ]
     },
@@ -32,7 +50,13 @@ module.exports = {
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            filename: '../web/app-front/vendor.js'
+            filename: 'vendor.js'
+        }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery',
+            'root.jQuery': 'jquery'
         })
     ],
 

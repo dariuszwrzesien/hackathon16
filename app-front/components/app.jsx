@@ -3,7 +3,7 @@ import DOM from 'react-dom';
 
 const App = React.createClass({
     render () {
-        return (<div>Hello world!</div>);
+        return (<div>Hello world! <i className="glyphicon glyphicon-ok"></i></div>);
     }
 });
 
