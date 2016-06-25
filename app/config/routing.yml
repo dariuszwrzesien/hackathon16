@@ -8,3 +8,7 @@ notes:
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc
+admin:
+    resource: "@AdminBundle/Controller"
+    type:     annotation
+
