@@ -1,6 +1,14 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+notes:
+    resource: "@AppBundle/Controller/NotesController.php"
+    type:     rest
+    prefix:   /api
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
 admin:
     resource: "@AdminBundle/Controller"
     type:     annotation
+
