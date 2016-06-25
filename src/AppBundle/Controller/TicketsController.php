@@ -21,12 +21,16 @@ class TicketsController extends FOSRestController
      * )
      *
      * @View(serializerGroups={"details"})
+     * @param $page
+     * @return \ArrayIterator
      */
-    public function getTicketsAction()
+    public function getTicketsAction($page = 1)
     {
-        $ticket = new Ticket();
+        $tickets = $this->getDoctrine()
+            ->getRepository('AppBundle\Entity\Ticket')
+            ->findAll($page);
 
-        return [$ticket];
+        return $tickets->getIterator();
     }
 
     /**
