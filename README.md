@@ -40,8 +40,7 @@ The application is bundled and minified using the [webpack](https://webpack.gith
 
 To build the application you need `node` and `npm` on your machine. Get node [here](https://nodejs.org/en/download/).
 
-Built assets are committed in the repository, however it is advised to build the application after getting fresh sources.
-To do this, go to `./app-front` in shell of your choice and run command `npm i`. This will install latest `npm` dependencies and build the application.
+To build the front application, go to `./app-front` in shell of your choice and run command `npm i`. This will install latest `npm` dependencies and build the application.
 
 To build the application without installing `node_modules` simply run `npm run build` in `./app-front`
 
