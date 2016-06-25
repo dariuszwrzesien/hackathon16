@@ -1,8 +1,8 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
-notes:
-    resource: "@AppBundle/Controller/NotesController.php"
+tickets:
+    resource: "@AppBundle/Controller/TicketsController.php"
     type:     rest
     prefix:   /api
 NelmioApiDocBundle:

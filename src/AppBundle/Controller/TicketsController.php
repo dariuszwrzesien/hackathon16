@@ -2,19 +2,19 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Note;
+use AppBundle\Entity\Ticket;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations\View;
 
-class NotesController extends FOSRestController
+class TicketsController extends FOSRestController
 {
     /**
      * @ApiDoc(
-     *   description = "Get all Notes",
-     *   output = "AppBundle\Entity\Note",
+     *   description = "Get all Tickets",
+     *   output = "AppBundle\Entity\Ticket",
      *   statusCodes = {
      *     200 = "OK",
      *   }
@@ -22,43 +22,41 @@ class NotesController extends FOSRestController
      *
      * @View(serializerGroups={"details"})
      */
-    public function getNotesAction()
+    public function getTicketsAction()
     {
-        $note = new Note();
-        $note->setDescription('Example description');
+        $ticket = new Ticket();
 
-        return [$note];
+        return [$ticket];
     }
 
     /**
      * @ApiDoc(
-     *   description = "Get Note details",
+     *   description = "Get Ticket details",
      *   requirements = {
-     *     { "name" = "id", "dataType" = "integer", "requirement" = "\d+", "description" = "Note's id" },
+     *     { "name" = "id", "dataType" = "integer", "requirement" = "\d+", "description" = "Ticket's id" },
      *   },
-     *   output = "AppBundle\Entity\Note",
+     *   output = "AppBundle\Entity\Ticket",
      *   statusCodes = {
-     *     200 = "Returned when note was found",
-     *     404 = "Returned when note was not found"
+     *     200 = "Returned when ticket was found",
+     *     404 = "Returned when ticket was not found"
      *   }
      * )
      *
      * @View(serializerGroups={"details"})
      */
-    public function getNoteAction($id)
+    public function getTicketAction($id)
     {
-        $note = new Note();
-        $note->setDescription('Example description');
+        $ticket = new Ticket();
 
-        return $note;
+        return $ticket;
     }
 
     /**
      * @ApiDoc(
-     *  description = "Create new Note and store them in database",
+     *  description = "Create new Ticket and store them in database",
      *  resource = true,
-     *  input = "AppBundle\Entity\Note",
-     *  output = "AppBundle\Entity\Note",
+     *  input = "AppBundle\Entity\Ticket",
+     *  output = "AppBundle\Entity\Ticket",
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      400 = "Returned when data validation fails",
@@ -67,18 +65,18 @@ class NotesController extends FOSRestController
      *
      * @View(serializerGroups={"details"})
      */
-    public function postNoteAction(Request $request)
+    public function postTicketAction(Request $request)
     {
-        $noteData = $userData = $request->request->all();
+        $ticketData = $userData = $request->request->all();
 
         return new Response();
     }
 
     /**
      * @ApiDoc(
-     *  description = "Update Note's data",
+     *  description = "Update Ticket's data",
      *  requirements = {
-     *     { "name" = "id", "dataType" = "integer", "requirement" = "\d+", "description" = "Note's id" }
+     *     { "name" = "id", "dataType" = "integer", "requirement" = "\d+", "description" = "Ticket's id" }
      *  },
      *  parameters = {
      *      { "name" = "description", "dataType" = "string", "requirement" = "\w+", "required" = true, "format" = "{not blank}" }
@@ -86,18 +84,17 @@ class NotesController extends FOSRestController
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      400 = "Returned when data validation fails",
-     *      404 = "Returned when note not found",
+     *      404 = "Returned when ticket not found",
      *      500 = "Returned when update operation fails"
      *  }
      * )
      *
      * @View(serializerGroups={"update"})
      */
-    public function putNoteAction(Request $request, $id)
+    public function putTicketAction(Request $request, $id)
     {
-        $note = new Note();
-        $note->setDescription($request->request->get('description'));
+        $ticket = new Ticket();
 
-        return $note;
+        return $ticket;
     }
 }
