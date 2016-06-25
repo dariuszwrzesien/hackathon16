@@ -1,0 +1,5 @@
+AppBundle\Entity\Note:
+    exclusion_policy: ALL
+    virtual_properties:
+        getId: { type: "integer", groups: [details, update] }
+        getDescription: { type: "string", groups: [details] }
