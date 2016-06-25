@@ -1,6 +1,7 @@
 import React from 'react';
 import DOM from 'react-dom';
 import {Router, Route, IndexRoute, hashHistory, Link} from 'react-router';
+import Geo from './geo';
 
 const App = React.createClass({
     propTypes: {
@@ -30,6 +31,7 @@ const renderApp = () => {
             <Route component={App} path="/">
                 <IndexRoute component={HelloWorld} />
                 <Route component={Nested} path="nested" />
+                <Route component={Geo} path="geo" />
             </Route>
         </Router>,
         document.getElementById('main-container')
