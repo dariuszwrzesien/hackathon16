@@ -15,3 +15,5 @@
 /vendor/
 /web/bundles/
 .idea
+node_modules/
+/web/app-front/
