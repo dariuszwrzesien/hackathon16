@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        app: ['./components/app.jsx'],
+        app: ['babel-polyfill', './components/app.jsx'],
         vendor: ['react', 'bootstrap-webpack!./bootstrap.config.js']
     },
 
