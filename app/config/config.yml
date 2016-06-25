@@ -91,3 +91,4 @@ fos_rest:
         serialize_null: true
 
     param_fetcher_listener: true
+
