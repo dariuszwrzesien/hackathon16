@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Attachment;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Location;
 use AppBundle\Entity\Status;
@@ -15,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\FileParam;
 
 class TicketsController extends FOSRestController
 {
@@ -30,6 +32,7 @@ class TicketsController extends FOSRestController
      * @View(serializerGroups={"details"})
      * @QueryParam(name="page", requirements="\d+", default="1", description="Current page")
      * @QueryParam(name="limit", requirements="\d+", default="25", description="Limit of results")
+     * @param ParamFetcher $fetcher
      * @return array
      */
     public function getTicketsAction(ParamFetcher $fetcher)
@@ -58,16 +61,7 @@ class TicketsController extends FOSRestController
      */
     public function getTicketAction($id)
     {
-        $repository = $this->getDoctrine()->getRepository('AppBundle\Entity\Ticket');
-        $ticket = $repository->findOneById($id);
-
-        if ( ! $ticket) {
-            throw $this->createNotFoundException(
-                'No ticket found for id '.$id
-                );
-        }
-
-        return $ticket;
+        return $this->getTicket($id);
     }
 
     /**
@@ -117,6 +111,46 @@ class TicketsController extends FOSRestController
 
     /**
      * @ApiDoc(
+     *  description = "Add attachment for ticket",
+     *  resource = true,
+     *  output = "AppBundle\Entity\Ticket",
+     *  statusCodes = {
+     *      201 = "Returned when successful",
+     *      400 = "Returned when data validation fails",
+     *      410 = "Returned when data write fails"
+     *  }
+     * )
+     *
+     * @FileParam(name="attachment", image=true, requirements={"maxSize"="5m"}, strict=true)
+     * @param $id
+     * @param ParamFetcher $fetcher
+     * @return Response
+     *
+     * @View(serializerGroups={"details"})
+     */
+    public function postTicketAttachmentAction($id, ParamFetcher $fetcher)
+    {
+        $ticket = $this->getTicket($id);
+
+        $file = $fetcher->get('attachment');
+        $filePath = $this->container->getParameter('upload_dir');
+        $fileName = md5(microtime()) .'.' . $file->guessExtension();
+        $file->move($filePath, $fileName);
+
+        $attachment = new Attachment();
+        $attachment->setPath($filePath);
+        $attachment->setFileName($fileName);
+        $attachment->setTicket($ticket);
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($attachment);
+        $manager->flush();
+
+        return new Response($ticket->getId(), 201);
+    }
+
+    /**
+     * @ApiDoc(
      *  description = "Update Ticket's data",
      *  requirements = {
      *     { "name" = "id", "dataType" = "integer", "requirement" = "\d+", "description" = "Ticket's id" }
@@ -137,6 +171,23 @@ class TicketsController extends FOSRestController
     public function putTicketAction(Request $request, $id)
     {
         $ticket = new Ticket();
+
+        return $ticket;
+    }
+
+    /**
+     * @param $id
+     * @return Ticket
+     */
+    private function getTicket($id)
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle\Entity\Ticket');
+        $ticket = $repository->findOneById($id);
+        if (!$ticket) {
+            throw $this->createNotFoundException(
+                'No ticket found for id '.$id
+            );
+        }
 
         return $ticket;
     }
