@@ -4,10 +4,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Ticket;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Request\ParamFetcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
 
 class TicketsController extends FOSRestController
 {
@@ -21,16 +23,17 @@ class TicketsController extends FOSRestController
      * )
      *
      * @View(serializerGroups={"details"})
-     * @param $page
-     * @return \ArrayIterator
+     * @QueryParam(name="page", requirements="\d+", default="1", description="Current page")
+     * @return array
+     * @internal param $page
      */
-    public function getTicketsAction($page = 1)
+    public function getTicketsAction(ParamFetcher $fetcher)
     {
         $tickets = $this->getDoctrine()
             ->getRepository('AppBundle\Entity\Ticket')
-            ->findAll($page);
+            ->findAll();
 
-        return $tickets->getIterator();
+        return $tickets;
     }
 
     /**
