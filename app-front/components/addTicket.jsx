@@ -10,19 +10,20 @@ const AddTicket = React.createClass({
             categories: [],
             panel: 0,
             coordinates: {},
-            locationAddress: ''
+            locationAddress: '',
+            error: null
         };
     },
 
     componentWillMount () {
-      $.ajax({
-        url: '/api/categories',
-        success: result => {
-          this.setState({
-            categories: result
-          });
-        }
-      });
+        $.ajax({
+            url: '/api/categories',
+            success: result => {
+                this.setState({
+                    categories: result
+                });
+            }
+        });
     },
 
     setCategory (event) {
@@ -43,7 +44,9 @@ const AddTicket = React.createClass({
         $.ajax({
             method: 'POST',
             url: '/api/tickets',
-            data: newTicket
+            data: newTicket,
+            success: () => this.showPanel(4),
+            error: (jqhxr, error, message) => this.setState({error: message})
         });
     },
 
@@ -69,6 +72,10 @@ const AddTicket = React.createClass({
     },
 
     renderPanel (panel) {
+        if (this.state.error) {
+            return null;
+        }
+
         const panels = [
             () => <div className="panel">
                 <h2>Start</h2>
@@ -151,71 +158,59 @@ const AddTicket = React.createClass({
                     </div>
                 </div>);
             },
-            () => {
-                const showLastPanel = () => {
-                    this.showPanel(4);
-                    this.addTicket();
-                };
-                return (
-                    <div className="panel">
-                        <h2>Opisz zgłoszenie</h2>
-                        <div className="box">
-                            <ProgressList
-                                progress={3}
-                                steps={4}
-                            />
-                            <p>Opisz zgłoszenie</p>
-                            <textarea
-                                className='form-control'
-                                placeholder="Opis"
-                                ref={r => this.description = r}
-                            ></textarea>
-                            <select
-                                className='form-control'
-                                onChange={this.setCategory}
-                                value={this.state.category}
-                            >
-                                {this.renderCategories()}
-                            </select>
-                            <div className="row">
-                                <div className="col-sm-6">
-                                    <button
-                                        className="button button-gray navigate arrow arrow-prev"
-                                        onClick={this.showPanel.bind(null, 2)}
-                                        type="button"
-                                    >Wstecz</button>
-                                </div>
-                                <div className="col-sm-6">
-                                    <button
-                                        className="button button-red navigate arrow arrow-next"
-                                        onClick={showLastPanel}
-                                        type="button"
-                                    >Zakończ</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>);
-            },
-            () => {
-                const reset = () => this.setState(this.getInitialState());
-
-                return (
-                    <div className="panel">
-                        <h2>Zgłoszenie zostało wysłane</h2>
-                        <div className="box thin-box">
-                            <ProgressList
-                                progress={4}
-                                steps={4}
-                            />
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
+            () => <div className="panel">
+                <h2>Opisz zgłoszenie</h2>
+                <div className="box">
+                    <ProgressList
+                        progress={3}
+                        steps={4}
+                    />
+                    <p>Opisz zgłoszenie</p>
+                    <textarea
+                        className="form-control"
+                        placeholder="Opis"
+                        ref={r => (this.description = r)}
+                    ></textarea>
+                    <select
+                        className="form-control"
+                        onChange={this.setCategory}
+                        value={this.state.category}
+                    >
+                        {this.renderCategories()}
+                    </select>
+                    <div className="row">
+                        <div className="col-sm-6">
                             <button
-                                className="button button-red navigate button-center"
-                                onClick={reset}
+                                className="button button-gray navigate arrow arrow-prev"
+                                onClick={this.showPanel.bind(null, 2)}
                                 type="button"
-                            >Powrót na stronę główną</button>
-                          </div>
-                    </div>);
-            }
+                            >Wstecz</button>
+                        </div>
+                        <div className="col-sm-6">
+                            <button
+                                className="button button-red navigate arrow arrow-next"
+                                onClick={this.addTicket}
+                                type="button"
+                            >Zakończ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>,
+            () => <div className="panel">
+                <h2>Zgłoszenie zostało wysłane</h2>
+                <div className="box thin-box">
+                    <ProgressList
+                        progress={4}
+                        steps={4}
+                    />
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
+                    <button
+                        className="button button-red navigate button-center"
+                        onClick={this.reset}
+                        type="button"
+                    >Powrót na stronę główną</button>
+                </div>
+            </div>
         ];
 
         if (this.state.panel !== panel) {
@@ -225,6 +220,18 @@ const AddTicket = React.createClass({
         return panels[panel]();
     },
 
+    reset () {
+        this.setState(this.getInitialState());
+    },
+
+    renderError () {
+        if (!this.state.error) {
+            return null;
+        }
+
+        return <div className="alert alert-danger">Due to an error we could not save your ticket. Please, <a onClick={this.reset} style={{cursor: 'pointer'}}><strong>try again</strong></a> in a second.</div>;
+    },
+
     render () {
         return (<section>
             <div className="container">
@@ -232,6 +239,7 @@ const AddTicket = React.createClass({
                     <div className="col-md-10 col-md-offset-1">
                         <form action="#">
                             <div className="panel-container">
+                                {this.renderError()}
                                 {this.renderPanel(0)}
                                 {this.renderPanel(1)}
                                 {this.renderPanel(2)}

@@ -38,7 +38,7 @@ const Map = React.createClass({
                         }
                     });
                 },
-                rejection => this.setState({locationError: rejection, ready: false})
+                rejection => this.setState({locationError: rejection, ready: true})
             );
     },
 
@@ -74,7 +74,7 @@ const Map = React.createClass({
 
     renderError () {
         if (this.state.locationError) {
-            return <p className="aler alert-error">{this.state.locationError}</p>;
+            return <div className="aler alert-error">We couldn't get the specified location.</div>;
         }
 
         return null;
