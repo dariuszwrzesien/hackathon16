@@ -130,12 +130,15 @@ class TicketsController extends FOSRestController
      */
     public function postTicketAttachmentAction($id, ParamFetcher $fetcher)
     {
-        $file = $fetcher->get('attachment');
-        $fileName = md5(microtime()) .'.' . $file->guessExtension();
-        $file->move(Attachment::PATH, $fileName);
-
         $ticket = $this->getTicket($id);
+
+        $file = $fetcher->get('attachment');
+        $filePath = $this->container->getParameter('upload_dir');
+        $fileName = md5(microtime()) .'.' . $file->guessExtension();
+        $file->move($filePath, $fileName);
+
         $attachment = new Attachment();
+        $attachment->setPath($filePath);
         $attachment->setFileName($fileName);
         $attachment->setTicket($ticket);
 

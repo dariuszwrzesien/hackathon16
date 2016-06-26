@@ -8,8 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class Attachment {
-    const PATH = 'upload/attachment';
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -22,6 +20,11 @@ class Attachment {
      * @ORM\JoinColumn(name="ticket_id", referencedColumnName="id")
      */
     public $ticket;
+
+    /**
+     * @ORM\Column(type="string", length=250)
+     */
+    public $path;
 
     /**
      * @ORM\Column(type="string", length=250)
@@ -65,7 +68,7 @@ class Attachment {
     /**
      * Set ticket
      *
-     * @param \AppBundle\Entity\Ticket $ticket
+     * @param Ticket $ticket
      *
      * @return Attachment
      */
@@ -79,10 +82,34 @@ class Attachment {
     /**
      * Get ticket
      *
-     * @return \AppBundle\Entity\Ticket
+     * @return Ticket
      */
     public function getTicket()
     {
         return $this->ticket;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     *
+     * @return Attachment
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
     }
 }
