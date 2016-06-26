@@ -4,10 +4,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Ticket;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Request\ParamFetcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
 
 class TicketsController extends FOSRestController
 {
@@ -21,12 +23,17 @@ class TicketsController extends FOSRestController
      * )
      *
      * @View(serializerGroups={"details"})
+     * @QueryParam(name="page", requirements="\d+", default="1", description="Current page")
+     * @QueryParam(name="limit", requirements="\d+", default="25", description="Limit of results")
+     * @return array
      */
-    public function getTicketsAction()
+    public function getTicketsAction(ParamFetcher $fetcher)
     {
-        $ticket = new Ticket();
+        $tickets = $this->getDoctrine()
+            ->getRepository('AppBundle\Entity\Ticket')
+            ->findAll($fetcher->get('page'), $fetcher->get('limit'));
 
-        return [$ticket];
+        return $tickets->getIterator()->getArrayCopy();
     }
 
     /**
