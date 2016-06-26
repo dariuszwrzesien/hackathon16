@@ -8,21 +8,25 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class PaginateEntityRepository extends EntityRepository
 {
-    const MAX_PER_PAGE = 25;
+    private $query;
+    private $currentPage;
+    private $recordsCount;
 
-    public function findAll(int $currentPage = 1)
+    public function findAll(int $currentPage = 1, int $recordsCount = 25)
     {
-        $query = $this->createQueryBuilder('e')->getQuery();
-        return $this->paginate($query, $currentPage);
+        $this->currentPage = $currentPage;
+        $this->recordsCount = $recordsCount;
+        $this->query = $this->createQueryBuilder('alias')->getQuery();
+        return $this->paginate();
     }
 
-    private function paginate(Query $query, int $currentPage)
+    private function paginate()
     {
-        $paginator = new Paginator($query);
+        $paginator = new Paginator($this->query);
 
         $paginator->getQuery()
-            ->setFirstResult(self::MAX_PER_PAGE * ($currentPage - 1))
-            ->setMaxResults(self::MAX_PER_PAGE);
+            ->setFirstResult($this->recordsCount * ($this->currentPage - 1))
+            ->setMaxResults($this->recordsCount);
 
         return $paginator;
     }

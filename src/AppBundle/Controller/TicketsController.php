@@ -24,16 +24,16 @@ class TicketsController extends FOSRestController
      *
      * @View(serializerGroups={"details"})
      * @QueryParam(name="page", requirements="\d+", default="1", description="Current page")
+     * @QueryParam(name="limit", requirements="\d+", default="25", description="Limit of results")
      * @return array
-     * @internal param $page
      */
     public function getTicketsAction(ParamFetcher $fetcher)
     {
         $tickets = $this->getDoctrine()
             ->getRepository('AppBundle\Entity\Ticket')
-            ->findAll();
+            ->findAll($fetcher->get('page'), $fetcher->get('limit'));
 
-        return $tickets;
+        return $tickets->getIterator()->getArrayCopy();
     }
 
     /**
