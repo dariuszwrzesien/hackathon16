@@ -18,19 +18,37 @@ class Location {
      */
     public $longitude;
 
+    /**
+     * @return float
+     */
     public function getLatitude() {
         return $this->latitude;
     }
 
+    /**
+     * @return float
+     */
     public function getLongitude() {
         return $this->longitude;
     }
 
+    /**
+     * @param float $latitude
+     * @return Location
+     */
     public function setLatitude($latitude) {
         $this->latitude = $latitude;
+
+        return $this;
     }
 
+    /**
+     * @param float $longitude
+     * @return Location
+     */
     public function setLongitude($longitude) {
         $this->longitude = $longitude;
+
+        return $this;
     }
 }

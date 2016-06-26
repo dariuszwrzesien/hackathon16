@@ -196,6 +196,14 @@ class Ticket
     }
 
     /**
+     * @return string
+     */
+    public function getCategoryName()
+    {
+        return $this->getCategory()->getName();
+    }
+
+    /**
      * Set attachments
      *
      * @param ArrayObject $attachments
