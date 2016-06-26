@@ -18,19 +18,23 @@ class Status {
     /**
      * Checks whether transition to a new status is allowed.
      *
-     * @param int $oldStatus
+     * @param int|null $oldStatus
      * @param int $newStatus
      * @return bool
      */
-    static public function isTransitionAllowed(int $oldStatus, int $newStatus)
+    static public function isTransitionAllowed($oldStatus, int $newStatus)
     {
-        if ($oldStatus === null && $newStatus !== self::WAITING) {
-            throw new \InvalidArgumentException('New tickets can only have status set to Waiting.');
+        if ($oldStatus === null) {
+            if ($newStatus !== self::WAITING) {
+                throw new \InvalidArgumentException('New tickets can only have status set to Waiting.');
+            } else {
+                return true;
+            }
         }
         if (!array_key_exists($oldStatus, self::$allowedTransitions)) {
             throw new \InvalidArgumentException('Current status is invalid');
         }
 
-        return in_array($newStatus, self::$allowedTransitions, true);
+        return in_array($newStatus, self::$allowedTransitions[$oldStatus], true);
     }
 }
