@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\AppBundle;
 use AppBundle\TicketRepository;
 use ArrayObject;
 use DateTime;
@@ -12,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Ticket
  *
  * @ORM\Table(name="ticket")
- * @ORM\Entity(repositoryClass="TicketRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\TicketRepository")
  */
 class Ticket
 {
