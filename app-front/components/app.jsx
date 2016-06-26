@@ -3,7 +3,6 @@ import DOM from 'react-dom';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 
 import '../sass/main.scss';
-import GMap from './gMap';
 import AddTicket from './addTicket';
 
 const App = React.createClass({
@@ -37,28 +36,11 @@ const App = React.createClass({
     }
 });
 
-const Nested = React.createClass({
-    render () {
-        return (<div>nested route</div>);
-    }
-});
-
-const test = a => {
-    console.log(a);
-};
-
 const renderApp = () => {
     DOM.render(
         <Router history={hashHistory}>
             <Route component={App} path="/">
                 <IndexRoute component={AddTicket} />
-                <Route component={Nested} path="nested" />
-                <Route
-                    component={React.createClass({render () {
-                        return <GMap address="Gliwice" setCoordinates={test} style={{width: '200px', height: '200px'}} />;
-                    }})}
-                    path="geo"
-                />
             </Route>
         </Router>,
         document.getElementById('main-container')

@@ -10,7 +10,7 @@ const Map = React.createClass({
         address: React.PropTypes.string.isRequired,
         setCoordinates: React.PropTypes.func,
         style: React.PropTypes.object,
-        updateOnResize: React.PropTypes.boolean
+        updateOnResize: React.PropTypes.bool
     },
 
     getInitialState () {
