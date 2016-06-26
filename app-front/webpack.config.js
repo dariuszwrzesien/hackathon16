@@ -19,10 +19,15 @@ module.exports = {
                 loader: 'babel-loader',
 
                 include: [
-                    path.resolve(__dirname, 'components')
+                    path.resolve(__dirname, 'components'),
+                    path.resolve(__dirname, 'services')
                 ],
 
-                test: [/\.jsx$/]
+                test: [/\.jsx$/, /\.js$/]
+            },
+            {
+                loader: 'json-loader',
+                test: [/\.json$/]
             },
             {
               test: /\.scss$/,
