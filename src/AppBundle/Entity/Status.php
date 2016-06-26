@@ -24,6 +24,9 @@ class Status {
      */
     static public function isTransitionAllowed(int $oldStatus, int $newStatus)
     {
+        if ($oldStatus === null && $newStatus !== self::WAITING) {
+            throw new \InvalidArgumentException('New tickets can only have status set to Waiting.');
+        }
         if (!array_key_exists($oldStatus, self::$allowedTransitions)) {
             throw new \InvalidArgumentException('Current status is invalid');
         }
