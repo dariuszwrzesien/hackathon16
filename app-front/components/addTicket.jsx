@@ -38,19 +38,20 @@ const AddTicket = React.createClass({
     addTicket () {
       const newTicket = {
         description: this.description.value,
-        coords: this.state.coords,
+        latitude: 10,
+        longitude: 50,
         category: this.state.category
       }
 
-      console.log('saving', newTicket);
+      // console.log('saving', newTicket);
+      $.ajax({
+        method: 'POST',
+        url: '/api/tickets',
+        data: newTicket
+      });
     },
 
     renderCategories () {
-      // const categories = [
-      //   {index: 1, label: 'opcja 1'},
-      //   {index: 2, label: 'opcja 2'},
-      //   {index: 3, label: 'opcja 3 xD'},
-      // ];
       var bufer = [];
       for (var i = 0; i < this.state.categories.length; i++ ) {
         var html = <option key={this.state.categories[i].id} value={this.state.categories[i].id}>{this.state.categories[i].name}</option>;
@@ -150,7 +151,7 @@ const AddTicket = React.createClass({
                       progress={4}
                       steps={4}
                     />
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
+                    <p>Twoje zgłoszenie zostało wysłane. Dziekujemy za współpracę.</p>
                     <button type="button" className="button button-red navigate button-center" data-nav='1'>Powrót na stronę główną</button>
                   </div>
                 </div>
