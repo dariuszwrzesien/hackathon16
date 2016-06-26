@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\AppBundle;
 use AppBundle\TicketRepository;
 use ArrayObject;
 use DateTime;
@@ -46,11 +47,15 @@ class Ticket
     private $status;
 
     /**
+     * @var Location
+     *
      * @ORM\Embedded(class="Location")
      */
     private $location;
 
     /**
+     * @var Category
+     *
      * @ORM\ManyToOne(targetEntity="Category")
      */
     private $category;

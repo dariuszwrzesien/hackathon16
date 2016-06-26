@@ -4,5 +4,5 @@ AppBundle\Entity\Ticket:
         id: { type: "integer", groups: [details, update], expose: true }
         description: { type: "string", groups: [details], expose: true }
         created: { type: "string", groups: [details], expose: true }
-        location: { type: "object", groups: [details], expose: true }
+        location: { type: "AppBundle\\Entity\\Location", groups: [detals], expose: true }
         category: { type: "string", groups: [details], expose: true }
