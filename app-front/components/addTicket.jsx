@@ -33,6 +33,20 @@ const AddTicket = React.createClass({
       console.log('saving', newTicket);
     },
 
+    renderCategories () {
+      const categories = [
+        {index: 1, label: 'opcja 1'},
+        {index: 2, label: 'opcja 2'},
+        {index: 3, label: 'opcja 3 xD'},
+      ];
+      var bufer = [];
+      for (var i = 0; i < categories.length; i++ ) {
+        var html = <option value={categories[i].index}>{categories[i].label}</option>;
+        bufer.push(html);
+      }
+      return bufer;
+    },
+
     render () {
         return (<section>
       <div className="container">
@@ -105,9 +119,7 @@ const AddTicket = React.createClass({
                       onChange={this.setCategory}
                       value={this.state.category}
                     >
-                      <option value={2}>Opcja 1</option>
-                      <option value={1}>Opcja 2</option>
-                      <option value={3}>Opcja 3</option>
+                      {this.renderCategories()}
                     </select>
                     <div className="row">
                       <div className="col-sm-6">

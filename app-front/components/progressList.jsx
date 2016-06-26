@@ -7,12 +7,12 @@ const ProgressList = React.createClass({
   },
 
   renderSteps () {
-    return Array(this.props.steps * 2).fill().reduce((elements, _, index) => {
+    return Array(this.props.steps * 2).fill().map((_, index) => {
       const step = index / 2;
       return index % 2
-        ? [...elements, <li className={`bar ${step + 1< this.props.progress ? 'red': ''}`}></li>]
-        : [...elements, <li className={`navigate ${step < this.props.progress ? 'red': ''}`} data-nav={step + 2}><span></span></li>]
-    }, []).slice(0, -1);
+        ? <li className={`bar ${step + 1< this.props.progress ? 'red': ''}`}></li>
+        : <li className={`navigate ${step < this.props.progress ? 'red': ''}`} data-nav={step + 2}><span></span></li>
+    }).slice(0, -1);
   },
 
   render () {
