@@ -32,22 +32,28 @@ const AddTicket = React.createClass({
     },
 
     addTicket () {
-      const newTicket = {
-        description: this.description.value,
-        coordinates: this.state.coordinates,
-        category: this.state.category
-      };
+        const {latitude, longitude} = this.state.coordinates;
+        const newTicket = {
+            description: this.description.value,
+            latitude,
+            longitude,
+            category: this.state.category
+        };
 
-      console.log('saving', newTicket);
+        $.ajax({
+            method: 'POST',
+            url: '/api/tickets',
+            data: newTicket
+        });
     },
 
     renderCategories () {
-      var buffer = [];
-      for (var i = 0; i < this.state.categories.length; i++ ) {
-        var html = <option key={this.state.categories[i].id} value={this.state.categories[i].id}>{this.state.categories[i].name}</option>;
-        buffer.push(html);
-      }
-      return buffer;
+        var buffer = [];
+            for (var i = 0; i < this.state.categories.length; i++ ) {
+                var html = <option key={this.state.categories[i].id} value={this.state.categories[i].id}>{this.state.categories[i].name}</option>;
+                buffer.push(html);
+            }
+        return buffer;
     },
 
     toggleMap () {
@@ -129,9 +135,9 @@ const AddTicket = React.createClass({
                         <div className="row">
                             <div className="col-sm-6">
                                 <button
-                                className="button button-gray navigate arrow arrow-prev"
-                                onClick={this.showPanel.bind(null, 1)}
-                                type="button"
+                                    className="button button-gray navigate arrow arrow-prev"
+                                    onClick={this.showPanel.bind(null, 1)}
+                                    type="button"
                                 >Wstecz</button>
                             </div>
                             <div className="col-sm-6">
