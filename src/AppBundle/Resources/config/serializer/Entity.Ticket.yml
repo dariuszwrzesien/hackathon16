@@ -1,0 +1,9 @@
+AppBundle\Entity\Ticket:
+    exclusion_policy: ALL
+    properties:
+        id: { type: "integer", groups: [details, update], expose: true }
+        description: { type: "string", groups: [details], expose: true }
+        created: { type: "DateTime", groups: [details], expose: true }
+        location: { type: "AppBundle\\Entity\\Location", groups: [detals], expose: true }
+    virtual_properties:
+        getCategoryName: { type: "string", serialized_name: "category_name", groups: [details], expose: true }
