@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Ticket
  *
  * @ORM\Table(name="ticket")
- * @ORM\Entity(repositoryClass="TicketRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\TicketRepository")
  */
 class Ticket
 {
@@ -46,11 +46,15 @@ class Ticket
     private $status;
 
     /**
+     * @var Location
+     *
      * @ORM\Embedded(class="Location")
      */
     private $location;
 
     /**
+     * @var Category
+     *
      * @ORM\ManyToOne(targetEntity="Category")
      */
     private $category;

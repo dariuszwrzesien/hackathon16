@@ -19,11 +19,14 @@ class CategoriesController extends FOSRestController
      * )
      *
      * @View(serializerGroups={"details"})
+     *
+     * @return array
      */
     public function getCategoriesAction()
     {
-        $category = new Category();
+        $repository = $this->getDoctrine()->getRepository('AppBundle\Entity\Category');
+        $categories = $repository->findAll();
 
-        return [$category, $category];
+        return $categories;
     }
 }
