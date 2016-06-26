@@ -2,6 +2,7 @@ import React from 'react';
 import DOM from 'react-dom';
 import {Router, Route, IndexRoute, hashHistory, Link} from 'react-router';
 import '../sass/main.scss';
+import ProgressList from './progressList';
 
 const App = React.createClass({
     propTypes: {
@@ -61,17 +62,10 @@ const HelloWorld = React.createClass({
                 <div className="panel">
                   <h2>Lokalizacja</h2>
                   <div className="box">
-                    <div className="progress-list">
-                      <ul className='dots'>
-                        <li className='navigate red' data-nav='2'><span></span></li>
-                        <li className='bar'></li>
-                        <li className='navigate' data-nav='3'><span></span></li>
-                        <li className='bar'></li>
-                        <li className='navigate' data-nav='4'><span></span></li>
-                        <li className='bar'></li>
-                        <li className='navigate' data-nav='5'><span></span></li>
-                      </ul>
-                    </div>
+                    <ProgressList
+                      progress={1}
+                      steps={4}
+                    />
                     <p>Lorem ipsum Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
                     <input type="text" className="form-control" placeholder="Lokalizacja" />
                     <div className="row">
@@ -85,17 +79,10 @@ const HelloWorld = React.createClass({
                 <div className="panel">
                   <h2>Mapa</h2>
                   <div className="box">
-                    <div className="progress-list">
-                      <ul className='dots'>
-                        <li className='navigate red' data-nav='2'><span></span></li>
-                        <li className='bar red'></li>
-                        <li className='navigate red' data-nav='3'><span></span></li>
-                        <li className='bar'></li>
-                        <li className='navigate' data-nav='4'><span></span></li>
-                        <li className='bar'></li>
-                        <li className='navigate' data-nav='5'><span></span></li>
-                      </ul>
-                    </div>
+                    <ProgressList
+                      progress={2}
+                      steps={4}
+                    />
                     <p>TODO</p>
                     <div className="row">
                       <div className="col-sm-6">
@@ -110,17 +97,10 @@ const HelloWorld = React.createClass({
                 <div className="panel">
                   <h2>Opisz zgłoszenie</h2>
                   <div className="box">
-                    <div className="progress-list">
-                      <ul className='dots'>
-                        <li className='navigate red' data-nav='2'><span></span></li>
-                        <li className='bar red'></li>
-                        <li className='navigate red' data-nav='3'><span></span></li>
-                        <li className='bar red'></li>
-                        <li className='navigate red' data-nav='4'><span></span></li>
-                        <li className='bar'></li>
-                        <li className='navigate' data-nav='5'><span></span></li>
-                      </ul>
-                    </div>
+                    <ProgressList
+                      progress={3}
+                      steps={4}
+                    />
                     <p>Opisz zgłoszenie</p>
                     <textarea placeholder="Opis" className='form-control'></textarea>
                     <select className='form-control'>
@@ -141,6 +121,10 @@ const HelloWorld = React.createClass({
                 <div className="panel">
                   <h2>Zgłoszenie zostało wysłane</h2>
                   <div className="box thin-box">
+                    <ProgressList
+                      progress={4}
+                      steps={4}
+                    />
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
                     <button className="button button-red navigate button-center" data-nav='1'>Powrót na stronę główną</button>
                   </div>
