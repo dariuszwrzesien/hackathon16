@@ -1,5 +1,5 @@
 import React from 'react';
-
+import _ from 'lodash';
 import {GoogleMapLoader, GoogleMap, Marker} from 'react-google-maps';
 import {triggerEvent} from 'react-google-maps/lib/utils';
 
@@ -9,7 +9,8 @@ const Map = React.createClass({
     propTypes: {
         address: React.PropTypes.string.isRequired,
         setCoordinates: React.PropTypes.func,
-        style: React.PropTypes.object
+        style: React.PropTypes.object,
+        updateOnResize: React.PropTypes.boolean
     },
 
     getInitialState () {
@@ -20,6 +21,7 @@ const Map = React.createClass({
     },
 
     componentWillMount () {
+        this.handleWindowResize = _.throttle(this.handleWindowResize, 500);
         googleMaps.getCoords(this.props.address)
             .then(
                 coords => {
@@ -38,6 +40,20 @@ const Map = React.createClass({
                 },
                 rejection => this.setState({locationError: rejection, ready: false})
             );
+    },
+
+    componentDidMount () {
+        if (this.props.updateOnResize) {
+            window.addEventListener('resize', this.handleWindowResize);
+        }
+    },
+
+    componentWillUnmount () {
+        window.removeEventListener('resize', this.handleWindowResize);
+    },
+
+    handleWindowResize () {
+        triggerEvent(this._googleMapComponent, 'resize');
     },
 
     notifyAboutNewCoordinates (coords) {
