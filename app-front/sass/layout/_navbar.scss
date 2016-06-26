@@ -1,0 +1,21 @@
+nav#main-navbar {
+  background-color: $color-red;
+  color: $color-white;
+  .container {
+    .navbar-header {
+      button {}
+      .navbar-brand {
+        color: $color-white;
+      }
+    }
+    .navbar-collapse {
+      ul {
+        li {
+          a {
+            color: $color-white;
+          }
+        }
+      }
+    }
+  }
+}

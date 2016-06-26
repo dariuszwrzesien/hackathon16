@@ -1,0 +1,66 @@
+.progress-list {
+  ul.dots {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    li {
+      &.navigate {
+        $progress-list-size: 45px;
+        $progress-list-size-mobile: 24px;
+        display: block;
+        width: $progress-list-size;
+        height: $progress-list-size;
+        border: 3px solid $color-gray;
+        border-radius: 50%;
+        background-color: $color-lgray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+
+        &:hover {
+          // border-color: $color-red;
+          span {
+            background-color: $color-red;
+          }
+        }
+        &.red {
+          border-color: $color-red;
+          span {
+            background-color: $color-red;
+          }
+        }
+        @media (max-width: 767px) {
+          width: $progress-list-size-mobile;
+          height: $progress-list-size-mobile;
+          border-width: 2px;
+        }
+        span {
+          display: block;
+          width: $progress-list-size * 0.5;
+          height: $progress-list-size * 0.5;
+          border-radius: 50%;
+          background-color: $color-gray;
+          transition: all .1s ease-in-out;
+          @media (max-width: 767px) {
+            width: $progress-list-size-mobile * 0.5;
+            height: $progress-list-size-mobile * 0.5;
+          }
+        }
+      }
+      &.bar {
+        border-bottom: 3px solid $color-gray;
+        flex-grow: 1;
+        &.red {
+          border-color: $color-red;
+        }
+      }
+    }
+  }
+}
