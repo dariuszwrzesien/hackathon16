@@ -5,46 +5,78 @@
         url: '/api/tickets',
         type: 'GET',
         success: function (data) {
-            data.forEach(createRow);
+            data.forEach(function (row) {
+                var $tr = createRow(row);
+                $table.find('tbody').append($tr)
+            });
         }
     });
 
     function createRow (row) {
-        var $tr = $('<tr>');
+        var $tr = $('<tr id="ticket-' + row.id +'">');
         $tr.append('<td>' + row.created + '</td>');
         $tr.append('<td>' + row.category_name + '</td>');
         $tr.append('<td>' + row.description + '</td>');
         $tr.append('<td>' + row.status + '</td>');
-        $tr.append('<td>' + createAction(row.id, row.status) + '</td>');
+        $tr.append('<td data-ticket-id="' + row.id + '">' + createAction(row.status) + '</td>');
 
-        $table.find('tbody').append($tr);
-        console.log(row);
+        return $tr;
     }
 
-    function createAction (id, status) {
+    function createAction (status) {
         var button = '';
+
+        if(status === 'canceled' || status === 'closed') {
+            return '';
+        }
+
         switch(status) {
             case 'waiting':
-                button = '<button class="btn btn-round btn-primary" onClick="sendAction(id, 2)">start progress</button>';
+                button = prepareButton('start progress', 'btn-primary', 2);
                 break;
             case 'in progress':
-                button = '<button class="btn btn-round btn-success" onClick="sendAction(id, 2)">resolved</button>';
+                button = prepareButton('resolved', 'btn-success', 3);
+                break;
         }
-        button += '<button class="btn btn-round btn-danger" onClick="sendAction(id, 2)">Cancel</button>';
 
+        button += prepareButton('cancel', 'btn-danger', 4);
         return button
     }
 
-    function sendAction (id, type) {
+    function prepareButton (text, className, statusId) {
+        return '<button class="btn btn-round ' + className + '" data-status-id=' + statusId + '>' + text + '</button>';
+    }
+
+    function sendAction (ticketid, newStatus) {
         $.ajax({
-            url: '/api/tickets',
+            url: '/api/tickets/' + ticketid,
             type: 'PUT',
             data: {
-
+                status: newStatus
             },
-            success: function (data) {
-                console.log(data);
+            success: function () {
+                $.ajax({
+                    url: '/api/tickets/' + ticketid,
+                    type: 'GET',
+                    data: {
+                        status: newStatus
+                    },
+                    success: function (row) {
+                        var $ticketRow = $('#ticket-' + row.id);
+                        var $newRow = createRow(row);
+
+                        $ticketRow.replaceWith($newRow);
+                    }
+                });
             }
         });
     }
+
+    $table.on('click', 'button', function (event) {
+        var $target = $(event.currentTarget);
+        var data = $target.data();
+        var ticketData = $target.parent().data();
+
+        sendAction(ticketData.ticketId, data.statusId);
+    });
 })();
