@@ -41,7 +41,7 @@ const AddTicket = React.createClass({
       ];
       var bufer = [];
       for (var i = 0; i < categories.length; i++ ) {
-        var html = <option value={categories[i].index}>{categories[i].label}</option>;
+        var html = <option key={categories[i].index} value={categories[i].index}>{categories[i].label}</option>;
         bufer.push(html);
       }
       return bufer;

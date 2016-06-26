@@ -10,8 +10,8 @@ const ProgressList = React.createClass({
     return Array(this.props.steps * 2).fill().map((_, index) => {
       const step = index / 2;
       return index % 2
-        ? <li className={`bar ${step + 1< this.props.progress ? 'red': ''}`}></li>
-        : <li className={`navigate ${step < this.props.progress ? 'red': ''}`} data-nav={step + 2}><span></span></li>
+        ? <li key={index} className={`bar ${step + 1< this.props.progress ? 'red': ''}`}></li>
+        : <li key={index} className={`navigate ${step < this.props.progress ? 'red': ''}`} data-nav={step + 2}><span></span></li>
     }).slice(0, -1);
   },
 
