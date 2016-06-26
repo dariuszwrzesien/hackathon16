@@ -54,20 +54,17 @@
             data: {
                 status: newStatus
             },
-            success: function () {
-                $.ajax({
+            statusCode: {
+                202: function() { $.ajax({
                     url: '/api/tickets/' + ticketid,
                     type: 'GET',
-                    data: {
-                        status: newStatus
-                    },
                     success: function (row) {
                         var $ticketRow = $('#ticket-' + row.id);
                         var $newRow = createRow(row);
 
                         $ticketRow.replaceWith($newRow);
                     }
-                });
+                }); }
             }
         });
     }
