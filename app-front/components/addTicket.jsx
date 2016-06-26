@@ -8,8 +8,29 @@ const AddTicket = React.createClass({
         var target = $(this).data('nav');
         $('.panel-container .panel').hide();
         $('.panel-container .panel:nth-child('+target+')').show();
-        return false;
       });
+    },
+
+    getInitialState () {
+      return {
+        category: 1
+      }
+    },
+
+    setCategory (event) {
+      this.setState({
+        category: Number(event.target.value)
+      })
+    },
+
+    addTicket () {
+      const newTicket = {
+        description: this.description.value,
+        coords: this.state.coords,
+        category: this.state.category
+      }
+
+      console.log('saving', newTicket);
     },
 
     render () {
@@ -23,7 +44,7 @@ const AddTicket = React.createClass({
                   <h2>Start</h2>
                   <div className="box thin-box">
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
-                    <button className="button button-red navigate arrow arrow-next button-center" data-nav='2'>Rozpocznij</button>
+                    <button type="button" className="button button-red navigate arrow arrow-next button-center" data-nav='2'>Rozpocznij</button>
                   </div>
                 </div>
                 <div className="panel">
@@ -34,11 +55,16 @@ const AddTicket = React.createClass({
                       steps={4}
                     />
                     <p>Lorem ipsum Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
-                    <input type="text" className="form-control" placeholder="Lokalizacja" />
+                    <input
+                      className="form-control"
+                      placeholder="Lokalizacja"
+                      ref={r => this.locationAddress = r}
+                      type="text"
+                    />
                     <div className="row">
                       <div className="col-sm-6"></div>
                       <div className="col-sm-6">
-                        <button className="button button-gray navigate arrow arrow-next" data-nav='3'>Dalej</button>
+                        <button type="button" className="button button-gray navigate arrow arrow-next" data-nav='3'>Dalej</button>
                       </div>
                     </div>
                   </div>
@@ -53,10 +79,10 @@ const AddTicket = React.createClass({
                     <p>TODO</p>
                     <div className="row">
                       <div className="col-sm-6">
-                        <button className="button button-gray navigate arrow arrow-prev" data-nav='2'>Wstecz</button>
+                        <button type="button" className="button button-gray navigate arrow arrow-prev" data-nav='2'>Wstecz</button>
                       </div>
                       <div className="col-sm-6">
-                        <button className="button button-gray navigate arrow arrow-next" data-nav='4'>Dalej</button>
+                        <button type="button" className="button button-gray navigate arrow arrow-next" data-nav='4'>Dalej</button>
                       </div>
                     </div>
                   </div>
@@ -69,18 +95,26 @@ const AddTicket = React.createClass({
                       steps={4}
                     />
                     <p>Opisz zgłoszenie</p>
-                    <textarea placeholder="Opis" className='form-control'></textarea>
-                    <select className='form-control'>
-                      <option>Opcja 1</option>
-                      <option>Opcja 2</option>
-                      <option>Opcja 3</option>
+                    <textarea
+                      className='form-control'
+                      placeholder="Opis"
+                      ref={r => this.description = r}
+                    ></textarea>
+                    <select
+                      className='form-control'
+                      onChange={this.setCategory}
+                      value={this.state.category}
+                    >
+                      <option value={2}>Opcja 1</option>
+                      <option value={1}>Opcja 2</option>
+                      <option value={3}>Opcja 3</option>
                     </select>
                     <div className="row">
                       <div className="col-sm-6">
-                        <button className="button button-gray navigate arrow arrow-prev" data-nav='3'>Wstecz</button>
+                        <button type="button" className="button button-gray navigate arrow arrow-prev" data-nav='3'>Wstecz</button>
                       </div>
                       <div className="col-sm-6">
-                        <button className="button button-red navigate arrow arrow-next" data-nav='5'>Zakończ</button>
+                        <button type="button" className="button button-red navigate arrow arrow-next" data-nav='5' onClick={this.addTicket}>Zakończ</button>
                       </div>
                     </div>
                   </div>
@@ -93,7 +127,7 @@ const AddTicket = React.createClass({
                       steps={4}
                     />
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
-                    <button className="button button-red navigate button-center" data-nav='1'>Powrót na stronę główną</button>
+                    <button type="button" className="button button-red navigate button-center" data-nav='1'>Powrót na stronę główną</button>
                   </div>
                 </div>
               </div>
