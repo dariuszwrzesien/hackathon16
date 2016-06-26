@@ -2,12 +2,19 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
+use AppBundle\Entity\Location;
+use AppBundle\Entity\Status;
 use AppBundle\Entity\Ticket;
+use DateTime;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Request\ParamFetcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
 
 class TicketsController extends FOSRestController
 {
@@ -21,12 +28,17 @@ class TicketsController extends FOSRestController
      * )
      *
      * @View(serializerGroups={"details"})
+     * @QueryParam(name="page", requirements="\d+", default="1", description="Current page")
+     * @QueryParam(name="limit", requirements="\d+", default="25", description="Limit of results")
+     * @return array
      */
-    public function getTicketsAction()
+    public function getTicketsAction(ParamFetcher $fetcher)
     {
-        $ticket = new Ticket();
+        $tickets = $this->getDoctrine()
+            ->getRepository('AppBundle\Entity\Ticket')
+            ->findAll($fetcher->get('page'), $fetcher->get('limit'));
 
-        return [$ticket];
+        return $tickets->getIterator()->getArrayCopy();
     }
 
     /**
@@ -49,6 +61,12 @@ class TicketsController extends FOSRestController
         $repository = $this->getDoctrine()->getRepository('AppBundle\Entity\Ticket');
         $ticket = $repository->findOneById($id);
 
+        if ( ! $ticket) {
+            throw $this->createNotFoundException(
+                'No ticket found for id '.$id
+                );
+        }
+
         return $ticket;
     }
 
@@ -59,8 +77,9 @@ class TicketsController extends FOSRestController
      *  input = "AppBundle\Entity\Ticket",
      *  output = "AppBundle\Entity\Ticket",
      *  statusCodes = {
-     *      200 = "Returned when successful",
+     *      201 = "Returned when successful",
      *      400 = "Returned when data validation fails",
+     *      410 = "Returned when data write fails"
      *  }
      * )
      *
@@ -70,7 +89,30 @@ class TicketsController extends FOSRestController
     {
         $ticketData = $userData = $request->request->all();
 
-        return new Response();
+        $ticket = new Ticket();
+        $ticket->setCreated(new DateTime());
+        $ticket->setStatus(Status::WAITING);
+
+        $ticket->setDescription($ticketData['description']);
+
+        $location = new Location();
+        $location->setLatitude($ticketData['latitude']);
+        $location->setLongitude($ticketData['longitude']);
+        $ticket->setLocation($location);
+
+        $category = $this->getDoctrine()->getRepository('AppBundle\Entity\Category')->findOneById($ticketData['category']);
+        if ( ! $category) {
+            throw $this->createNotFoundException(
+                'Invalid category'
+            );
+        }
+        $ticket->setCategory($category);
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($ticket);
+        $manager->flush();
+
+        return new Response($ticket->getId(), 201);
     }
 
     /**

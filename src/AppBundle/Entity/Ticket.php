@@ -126,13 +126,17 @@ class Ticket
     /**
      * Set status
      *
-     * @param integer $status
+     * @param integer $newStatus
      *
      * @return Ticket
      */
-    public function setStatus($status)
+    public function setStatus($newStatus)
     {
-        $this->status = $status;
+        if (Status::isTransitionAllowed($this->status, $newStatus)) {
+            $this->status = $newStatus;
+        } else {
+            throw new \InvalidArgumentException("This status change is not allowed.");
+        }
 
         return $this;
     }
@@ -193,6 +197,14 @@ class Ticket
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategoryName()
+    {
+        return $this->getCategory()->getName();
     }
 
     /**

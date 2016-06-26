@@ -5,4 +5,5 @@ AppBundle\Entity\Ticket:
         description: { type: "string", groups: [details], expose: true }
         created: { type: "DateTime", groups: [details], expose: true }
         location: { type: "AppBundle\\Entity\\Location", groups: [detals], expose: true }
-        category: { type: "string", groups: [details], expose: true }
+    virtual_properties:
+        getCategoryName: { type: "string", serialized_name: "category_name", groups: [details], expose: true }
