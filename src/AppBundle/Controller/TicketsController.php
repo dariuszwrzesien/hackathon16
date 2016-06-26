@@ -160,6 +160,7 @@ class TicketsController extends FOSRestController
      *  },
      *  parameters = {
      *      { "name" = "description", "dataType" = "string",  "requirement" = "\w+", "required" = false },
+     *      { "name" = "status",      "dataType" = "integer", "requirement" = "\w+", "required" = false },
      *  },
      *  statusCodes = {
      *      202 = "Returned when successful",
@@ -175,12 +176,11 @@ class TicketsController extends FOSRestController
     {
         $ticketData = $request->request->all();
 
-        $repository = $this->getDoctrine()->getRepository('AppBundle\Entity\Ticket');
-        $ticket = $repository->findOneById($id);
-
+        $ticket = $this->getTicket($id);
         $em = $this->getDoctrine()->getManager();
 
         (isset($ticketData['description']))?$ticket->setDescription($ticketData['description']):null;
+        (isset($ticketData['status']))?$ticket->setStatus((int)$ticketData['status']):null;
 
         $em->persist($ticket);
         $em->flush();
