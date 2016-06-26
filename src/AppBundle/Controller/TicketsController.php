@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Location;
+use AppBundle\Entity\Status;
 use AppBundle\Entity\Ticket;
 use DateTime;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -88,15 +90,23 @@ class TicketsController extends FOSRestController
         $ticketData = $userData = $request->request->all();
 
         $ticket = new Ticket();
-        $ticket->setDescription($ticketData['description']);
         $ticket->setCreated(new DateTime());
-        $ticket->setStatus($ticketData['status']);
+        $ticket->setStatus(Status::WAITING);
+
+        $ticket->setDescription($ticketData['description']);
 
         $location = new Location();
         $location->setLatitude($ticketData['latitude']);
         $location->setLongitude($ticketData['longitude']);
-
         $ticket->setLocation($location);
+
+        $category = $this->getDoctrine()->getRepository('AppBundle\Entity\Category')->findOneById($ticketData['category']);
+        if ( ! $category) {
+            throw $this->createNotFoundException(
+                'Invalid category'
+            );
+        }
+        $ticket->setCategory($category);
 
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($ticket);
