@@ -3,6 +3,17 @@ import React from 'react';
 import ProgressList from './progressList';
 
 const AddTicket = React.createClass({
+    componentWillMount () {
+      $.ajax({
+        url: '/api/categories',
+        success: result => {
+          this.setState({
+            categories: result
+          });
+        }
+      });
+    },
+
     componentDidMount () {
       $('.panel .navigate').click(function(){
         var target = $(this).data('nav');
@@ -13,7 +24,8 @@ const AddTicket = React.createClass({
 
     getInitialState () {
       return {
-        category: 1
+        category: 1,
+        categories: []
       }
     },
 
@@ -34,14 +46,14 @@ const AddTicket = React.createClass({
     },
 
     renderCategories () {
-      const categories = [
-        {index: 1, label: 'opcja 1'},
-        {index: 2, label: 'opcja 2'},
-        {index: 3, label: 'opcja 3 xD'},
-      ];
+      // const categories = [
+      //   {index: 1, label: 'opcja 1'},
+      //   {index: 2, label: 'opcja 2'},
+      //   {index: 3, label: 'opcja 3 xD'},
+      // ];
       var bufer = [];
-      for (var i = 0; i < categories.length; i++ ) {
-        var html = <option key={categories[i].index} value={categories[i].index}>{categories[i].label}</option>;
+      for (var i = 0; i < this.state.categories.length; i++ ) {
+        var html = <option key={this.state.categories[i].id} value={this.state.categories[i].id}>{this.state.categories[i].name}</option>;
         bufer.push(html);
       }
       return bufer;
