@@ -159,7 +159,6 @@ class TicketsController extends FOSRestController
      *     { "name" = "id", "dataType" = "integer", "requirement" = "\d+", "description" = "Ticket's id" }
      *  },
      *  parameters = {
-     *      { "name" = "description", "dataType" = "string",  "requirement" = "\w+", "required" = false },
      *      { "name" = "status",      "dataType" = "integer", "requirement" = "\w+", "required" = false },
      *  },
      *  statusCodes = {
@@ -179,7 +178,6 @@ class TicketsController extends FOSRestController
         $ticket = $this->getTicket($id);
         $em = $this->getDoctrine()->getManager();
 
-        (isset($ticketData['description']))?$ticket->setDescription($ticketData['description']):null;
         (isset($ticketData['status']))?$ticket->setStatus((int)$ticketData['status']):null;
 
         $em->persist($ticket);
