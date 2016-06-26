@@ -39,6 +39,13 @@ class Ticket
     private $created;
 
     /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="updated", type="datetime")
+     */
+    private $updated;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="status", type="integer")
@@ -121,6 +128,30 @@ class Ticket
     public function getCreated()
     {
         return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param DateTime $updated
+     *
+     * @return Ticket
+     */
+    public function setUpdated(DateTime $updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 
     /**
