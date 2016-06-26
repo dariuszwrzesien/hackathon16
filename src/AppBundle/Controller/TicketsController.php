@@ -183,7 +183,7 @@ class TicketsController extends FOSRestController
         $em->persist($ticket);
         $em->flush();
 
-        return new Response(202);
+        return new Response(null, 202);
     }
 
     /**
