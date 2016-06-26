@@ -1,0 +1,56 @@
+.button {
+  font-size: 20px;
+  border: none;
+  padding: 15px 80px;
+  font-weight: lighter;
+  display: block;
+  margin: 15px auto 0 auto;
+  width: 100%;
+  border-radius: 0;
+  margin-top: 15px;
+  @media (max-width: 767px) {
+    width: 100%!important;
+    margin: auto!important;
+    margin-top: 15px!important;
+    padding: 15px;
+  }
+  &:hover, &:active, &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  &.arrow {
+    background-repeat: no-repeat;
+    @media (max-width: 767px) {
+      background-size: 0;
+    }
+    &-next {
+      background-image: url('../img/arrow-right.png');
+      background-position: 90% 50%;
+    }
+    &-prev {
+      background-image: url('../img/arrow-left.png');
+      background-position: 10% 50%;
+    }
+  }
+  &-center {
+    margin: 50px auto 30px auto;
+    width: auto!important;
+    @media (max-width: 767px) {
+      width: 100%!important;
+    }
+  }
+  &-red {
+    background-color: $color-red;
+    color: $color-white;
+    &:hover, &:active, &:focus {
+      color: $color-white;
+    }
+  }
+  &-gray {
+    background-color: $color-gray;
+    color: $color-white;
+    &:hover, &:active, &:focus {
+      color: $color-white;
+    }
+  }
+}
