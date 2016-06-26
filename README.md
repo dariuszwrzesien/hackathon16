@@ -8,7 +8,7 @@ git clone git@vm-git.fp.lan:dwrzesien/vm-hackathon16.git
 cd /var/www/vm-hackathon16
 vagrant up
 cd /var/www/vm-hackathon16/hackathon16
-git clone git@vm-git.fp.lan:mksiazek/Hackathon.git .
+git clone git@github.com:dariuszwrzesien/hackathon16.git .
 composer install
 ```
 
@@ -33,7 +33,7 @@ $: php bin/console doctrine:schema:update --force
 
 ### Tech stack
 
-We are creating a SPA using [React](https://facebook.github.io/react/) and [babel]{https://babeljs.io/} for ES6 support
+We are creating a SPA using [React](https://facebook.github.io/react/) and [babel](https://babeljs.io/) for ES6 support
 The application is bundled and minified using the [webpack](https://webpack.github.io/) bundler
 
 ### Building and developing the application
