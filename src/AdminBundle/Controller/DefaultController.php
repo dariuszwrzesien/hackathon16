@@ -14,4 +14,12 @@ class DefaultController extends Controller
     {
         return $this->render('admin/index.html.twig');
     }
+
+    /**
+     * @Route("/admin/tickets", name="admin")
+     */
+    public function ticketsAction()
+    {
+        return $this->render('admin/tickets.html.twig');
+    }
 }

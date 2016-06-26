@@ -7,6 +7,12 @@ class Status {
     const IN_PROGRESS = 2;
     const CLOSED = 3;
     const CANCELED = 4;
+    static private $statusNames = [
+        self::WAITING => 'waiting',
+        self::IN_PROGRESS => 'in progress',
+        self::CANCELED => 'canceled',
+        self::CLOSED => 'closed',
+    ];
 
     static private $allowedTransitions = [
         self::WAITING => [self::IN_PROGRESS, self::CANCELED],
@@ -36,5 +42,19 @@ class Status {
         }
 
         return in_array($newStatus, self::$allowedTransitions[$oldStatus], true);
+    }
+
+    /**
+     * @param $statusId
+     * @return string
+     */
+    static public function getStatusName($statusId)
+    {
+        if (array_key_exists($statusId, self::$statusNames)) {
+            return self::$statusNames[$statusId];
+        }
+        else {
+            return 'unknown';
+        }
     }
 }

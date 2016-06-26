@@ -208,6 +208,14 @@ class Ticket
     }
 
     /**
+     * @return string
+     */
+    public function getStatusName()
+    {
+        return Status::getStatusName($this->getStatus());
+    }
+
+    /**
      * Set attachments
      *
      * @param ArrayObject $attachments

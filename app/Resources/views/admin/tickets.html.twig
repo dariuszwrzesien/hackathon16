@@ -1,0 +1,23 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <h1>Tickets</h1>
+
+    <table id="datatable" class="table table-striped jambo_table bulk_action">
+        <thead>
+            <tr class="headings">
+                <th class="column-title">Created at</th>
+                <th class="column-title">Category</th>
+                <th class="column-title">Description</th>
+                <th class="column-title">Status</th>
+                <th class="column-title"></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    {% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('admin/js/jquery.datatables.min.js') }}"></script>
+    <script src="{{ asset('admin/js/tickets.js') }}"></script>
+{% endblock %}
