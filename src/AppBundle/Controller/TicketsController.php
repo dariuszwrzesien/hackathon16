@@ -7,6 +7,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Location;
 use AppBundle\Entity\Status;
 use AppBundle\Entity\Ticket;
+use AppBundle\Form\TicketType;
 use DateTime;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
@@ -81,10 +82,11 @@ class TicketsController extends FOSRestController
      */
     public function postTicketAction(Request $request)
     {
-        $ticketData = $userData = $request->request->all();
+        $ticketData = $request->request->all();
 
         $ticket = new Ticket();
         $ticket->setCreated(new DateTime());
+        $ticket->setUpdated(new DateTime());
         $ticket->setStatus(Status::WAITING);
 
         $ticket->setDescription($ticketData['description']);
@@ -152,14 +154,15 @@ class TicketsController extends FOSRestController
     /**
      * @ApiDoc(
      *  description = "Update Ticket's data",
+     *  resource = true,
      *  requirements = {
      *     { "name" = "id", "dataType" = "integer", "requirement" = "\d+", "description" = "Ticket's id" }
      *  },
      *  parameters = {
-     *      { "name" = "description", "dataType" = "string", "requirement" = "\w+", "required" = true, "format" = "{not blank}" }
+     *      { "name" = "status",      "dataType" = "integer", "requirement" = "\w+", "required" = false },
      *  },
      *  statusCodes = {
-     *      200 = "Returned when successful",
+     *      202 = "Returned when successful",
      *      400 = "Returned when data validation fails",
      *      404 = "Returned when ticket not found",
      *      500 = "Returned when update operation fails"
@@ -170,9 +173,17 @@ class TicketsController extends FOSRestController
      */
     public function putTicketAction(Request $request, $id)
     {
-        $ticket = new Ticket();
+        $ticketData = $request->request->all();
 
-        return $ticket;
+        $ticket = $this->getTicket($id);
+        $em = $this->getDoctrine()->getManager();
+
+        (isset($ticketData['status']))?$ticket->setStatus((int)$ticketData['status']):null;
+
+        $em->persist($ticket);
+        $em->flush();
+
+        return new Response(202);
     }
 
     /**
