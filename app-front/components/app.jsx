@@ -1,7 +1,7 @@
 import React from 'react';
 import DOM from 'react-dom';
 import {Router, Route, IndexRoute, hashHistory, Link} from 'react-router';
-import Geo from './geo';
+import GMap from './gMap';
 
 const App = React.createClass({
     propTypes: {
@@ -25,13 +25,22 @@ const Nested = React.createClass({
     }
 });
 
+const test = a => {
+    console.log(a);
+};
+
 const renderApp = () => {
     DOM.render(
         <Router history={hashHistory}>
             <Route component={App} path="/">
                 <IndexRoute component={HelloWorld} />
                 <Route component={Nested} path="nested" />
-                <Route component={Geo} path="geo" />
+                <Route
+                    component={React.createClass({render () {
+                        return <GMap address="Gliwice" setCoordinates={test} style={{width: '200px', height: '200px'}} />;
+                    }})}
+                    path="geo"
+                />
             </Route>
         </Router>,
         document.getElementById('main-container')
