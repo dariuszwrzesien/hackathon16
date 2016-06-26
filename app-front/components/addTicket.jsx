@@ -38,19 +38,20 @@ const AddTicket = React.createClass({
     addTicket () {
       const newTicket = {
         description: this.description.value,
-        coords: this.state.coords,
+        latitude: 10,
+        longitude: 50,
         category: this.state.category
       }
 
       console.log('saving', newTicket);
+      $.ajax({
+        method: 'POST',
+        url: '/api/tickets',
+        data: newTicket
+      });
     },
 
     renderCategories () {
-      // const categories = [
-      //   {index: 1, label: 'opcja 1'},
-      //   {index: 2, label: 'opcja 2'},
-      //   {index: 3, label: 'opcja 3 xD'},
-      // ];
       var bufer = [];
       for (var i = 0; i < this.state.categories.length; i++ ) {
         var html = <option key={this.state.categories[i].id} value={this.state.categories[i].id}>{this.state.categories[i].name}</option>;
