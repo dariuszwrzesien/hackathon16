@@ -8,10 +8,26 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class PaginateEntityRepository extends EntityRepository
 {
+    /**
+     * @var
+     */
     private $query;
+
+    /**
+     * @var
+     */
     private $currentPage;
+
+    /**
+     * @var
+     */
     private $recordsCount;
 
+    /**
+     * @param int $currentPage
+     * @param int $recordsCount
+     * @return Paginator
+     */
     public function findAll(int $currentPage = 1, int $recordsCount = 25)
     {
         $this->currentPage = $currentPage;
@@ -20,6 +36,9 @@ class PaginateEntityRepository extends EntityRepository
         return $this->paginate();
     }
 
+    /**
+     * @return Paginator
+     */
     private function paginate()
     {
         $paginator = new Paginator($this->query);
