@@ -1,0 +1,6 @@
+AppBundle\Entity\Comment:
+    exclusion_policy: ALL
+    properties:
+        id: { type: "integer", groups: [details], expose: true }
+        description: { type: "string", groups: [details], expose: true }
+        created: { type: "DateTime", groups: [details], expose: true }

@@ -18,7 +18,7 @@
         $tr.append('<td>' + row.category_name + '</td>');
         $tr.append('<td>' + row.description + '</td>');
         $tr.append('<td>' + row.status + '</td>');
-        $tr.append('<td data-ticket-id="' + row.id + '">' + createComments(row.comments) + '</td>');
+        $tr.append('<td data-ticket-id="' + row.id + '">' + createComments((row.comments).length) + '</td>');
         $tr.append('<td data-ticket-id="' + row.id + '">' + createAction(row.status) + '</td>');
 
         return $tr;

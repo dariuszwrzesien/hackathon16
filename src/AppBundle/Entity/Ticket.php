@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\TicketRepository;
-use ArrayObject;
+use Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -85,6 +85,11 @@ class Ticket
     public function getId()
     {
         return $this->id;
+    }
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -254,11 +259,11 @@ class Ticket
     /**
      * Set comments
      *
-     * @param ArrayObject $comments
+     * @param ArrayCollection $comments
      *
      * @return Ticket
      */
-    public function setComments(ArrayObject $comments)
+    public function setComments(ArrayCollection $comments)
     {
         $this->comments = $comments;
 
@@ -268,12 +273,11 @@ class Ticket
     /**
      * Get comments
      *
-     * @return ArrayObject
+     * @return ArrayCollection
      */
     public function getComments()
     {
-        return 10;
-//        return $this->comments;
+        return $this->comments;
     }
 
     /**
