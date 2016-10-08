@@ -5,7 +5,7 @@ namespace AdminBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class DashboardController extends Controller
 {
     /**
      * @Route("/admin/", name="admin")
@@ -22,14 +22,6 @@ class DefaultController extends Controller
 
         $templateParams['tickets_stats'] = $mockedChartData;
 
-        return $this->render('admin/index.html.twig', $templateParams);
-    }
-
-    /**
-     * @Route("/admin/tickets", name="adminTickets")
-     */
-    public function ticketsAction()
-    {
-        return $this->render('admin/tickets.html.twig');
+        return $this->render('admin/dashboard/index.html.twig', $templateParams);
     }
 }
