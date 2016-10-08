@@ -6,7 +6,6 @@ use AppBundle\Entity\Attachment;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Location;
 use AppBundle\Entity\Notifier;
-use AppBundle\Entity\Status;
 use AppBundle\Entity\Ticket;
 use AppBundle\Form\TicketType;
 use DateTime;
@@ -88,7 +87,7 @@ class TicketsController extends BaseApiController
         $ticket = new Ticket();
         $ticket->setCreated(new DateTime());
         $ticket->setUpdated(new DateTime());
-        $ticket->setStatus(Status::WAITING);
+        $ticket->setStatus(Ticket::WAITING);
         $ticket->setDescription($ticketData['description']);
 
         $location = new Location();

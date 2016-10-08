@@ -2,7 +2,6 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Comment;
-use AppBundle\Entity\Status;
 use AppBundle\Entity\Ticket;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Location;
@@ -22,8 +21,7 @@ class LoadCommentsData implements FixtureInterface
             1 => 'Komentarz pierwszy',
             2 => 'Komentarz drugi',
             3 => 'Komentarz trzeci',
-            4 => 'Komentarz czwarty',
-
+            4 => 'Komentarz czwarty'
         ];
 
         $category = new Category();
@@ -40,7 +38,7 @@ class LoadCommentsData implements FixtureInterface
         $ticket->setDescription('test description');
         $ticket->setCreated($timeStamp);
         $ticket->setUpdated($timeStamp);
-        $ticket->setStatus(Status::WAITING);
+        $ticket->setStatus(Ticket::WAITING);
         $ticket->setLocation($location);
         $manager->persist($ticket);
 

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\TicketRepository;
+use ArrayObject;
 use Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,6 +16,25 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ticket
 {
+    const WAITING = 1;
+    const IN_PROGRESS = 2;
+    const CLOSED = 3;
+    const CANCELED = 4;
+
+    static private $statusNames = [
+        self::WAITING => 'nowe',
+        self::IN_PROGRESS => 'w trakcie',
+        self::CANCELED => 'odrzucone',
+        self::CLOSED => 'zakończone',
+    ];
+
+    static private $allowedTransitions = [
+        self::WAITING => [self::IN_PROGRESS, self::CANCELED],
+        self::IN_PROGRESS => [self::CLOSED, self::CANCELED],
+        self::CANCELED => [],
+        self::CLOSED => [],
+    ];
+
     /**
      * @var int
      *
@@ -178,7 +198,7 @@ class Ticket
      */
     public function setStatus($newStatus)
     {
-        if (Status::isTransitionAllowed($this->status, $newStatus)) {
+        if (self::isTransitionAllowed($this->status, $newStatus)) {
             $this->status = $newStatus;
         } else {
             throw new \InvalidArgumentException("This status change is not allowed.");
@@ -258,7 +278,11 @@ class Ticket
      */
     public function getStatusName()
     {
-        return Status::getStatusName($this->getStatus());
+        if (array_key_exists($this->getStatus(), self::$statusNames)) {
+            return self::$statusNames[$this->getStatus()];
+        } else {
+            return 'nieznane';
+        }
     }
 
     /**
@@ -283,6 +307,46 @@ class Ticket
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->isWaiting() || $this->isInProgress();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWaiting()
+    {
+        return $this->getStatus() === self::WAITING;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInProgress()
+    {
+        return $this->getStatus() === self::IN_PROGRESS;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isClosed()
+    {
+        return $this->getStatus() === self::CLOSED;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCanceled()
+    {
+        return $this->getStatus() === self::CANCELED;
     }
 
     /**
@@ -327,5 +391,28 @@ class Ticket
     {
         return $this->notifier;
     }
-}
 
+    /**
+     * Checks whether transition to a new status is allowed.
+     *
+     * @param int|null $oldStatus
+     * @param int $newStatus
+     *
+     * @return bool
+     */
+    static public function isTransitionAllowed($oldStatus, int $newStatus)
+    {
+        if ($oldStatus === null) {
+            if ($newStatus !== self::WAITING) {
+                throw new \InvalidArgumentException('New tickets can only have status set to Waiting.');
+            } else {
+                return true;
+            }
+        }
+        if (!array_key_exists($oldStatus, self::$allowedTransitions)) {
+            throw new \InvalidArgumentException('Current status is invalid');
+        }
+
+        return in_array($newStatus, self::$allowedTransitions[$oldStatus], true);
+    }
+}

@@ -5,3 +5,6 @@ services:
     comment.service:
         class: AppBundle\Service\CommentService
         arguments: ["@doctrine"]
+    ticket.service:
+        class: AppBundle\Service\TicketService
+        arguments: ["@doctrine"]
