@@ -221,7 +221,7 @@ const AddTicket = React.createClass({
     },
 
     reset () {
-        this.setState(this.getInitialState());
+        this.setState(Object.assign({}, this.getInitialState(), {categories: this.state.categories}));
     },
 
     renderError () {
