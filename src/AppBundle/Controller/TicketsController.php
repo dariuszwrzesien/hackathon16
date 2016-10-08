@@ -19,7 +19,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\FileParam;
 
-class TicketsController extends FOSRestController
+class TicketsController extends BaseApiController
 {
     /**
      * @ApiDoc(
