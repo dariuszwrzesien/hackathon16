@@ -18,6 +18,7 @@
         $tr.append('<td>' + row.category_name + '</td>');
         $tr.append('<td>' + row.description + '</td>');
         $tr.append('<td>' + row.status + '</td>');
+        $tr.append('<td data-ticket-id="' + row.id + '">' + createComments((row.comments).length) + '</td>');
         $tr.append('<td data-ticket-id="' + row.id + '">' + createAction(row.status) + '</td>');
 
         return $tr;
@@ -41,6 +42,16 @@
 
         button += prepareButton('cancel', 'btn-danger', 4);
         return button
+    }
+
+    function createComments (comments) {
+        var button = '';
+        button += prepareRedirectButton(comments, 'btn-info btn-comment', 4, "/admin/comments/123");
+        return button
+    }
+
+    function prepareRedirectButton (text, className, statusId, href) {
+        return '<a href="' + href +'" class="btn btn-round ' + className + '" data-status-id=' + statusId + '>' + text + '</a>';
     }
 
     function prepareButton (text, className, statusId) {
