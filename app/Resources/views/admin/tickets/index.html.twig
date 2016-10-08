@@ -21,7 +21,9 @@
                 <td>{{ ticket.getCategoryName() }}</td>
                 <td>{{ ticket.getDescription() }}</td>
                 <td>{{ ticket.getStatusName() }}</td>
-                <td>{{ ticket.getComments().count() }}</td>
+                <td><a href="{{ path('adminComments', {'id': ticket.getId()}) }}" class="btn btn-round btn-info">
+                        {{ ticket.getComments().count() }}
+                    </a></td>
                 <td>
                 {% if ticket.isActive() %}
                     <a class="btn btn-round btn-danger" href="{{ path('adminCancelTicket', {'ticketId': ticket.getId()}) }}">
