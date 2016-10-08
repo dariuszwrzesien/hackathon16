@@ -5,6 +5,7 @@ AppBundle\Entity\Ticket:
         description: { type: "string", groups: [details], expose: true }
         created: { type: "DateTime", groups: [details], expose: true }
         location: { type: "AppBundle\\Entity\\Location", groups: [details], expose: true }
+        comments: { type: "Doctrine\\Common\\Collections\\ArrayCollection", groups: [details], expose: true }
     virtual_properties:
         getCategoryName: { type: "string", serialized_name: "category_name", groups: [details], expose: true }
         getStatusName:  { type: "string", serialized_name: "status", groups: [details], expose: true }

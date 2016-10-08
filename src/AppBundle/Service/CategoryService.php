@@ -6,6 +6,9 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 
 class CategoryService extends BaseService
 {
+    /**
+     * @return array
+     */
     public function getAllCategories()
     {
         $repository = $this->registry->getRepository('AppBundle\Entity\Category');

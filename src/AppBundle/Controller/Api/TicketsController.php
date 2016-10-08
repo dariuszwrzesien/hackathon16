@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Api;
 use AppBundle\Entity\Attachment;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Location;
+use AppBundle\Entity\Notifier;
 use AppBundle\Entity\Status;
 use AppBundle\Entity\Ticket;
 use AppBundle\Form\TicketType;
@@ -88,13 +89,19 @@ class TicketsController extends BaseApiController
         $ticket->setCreated(new DateTime());
         $ticket->setUpdated(new DateTime());
         $ticket->setStatus(Status::WAITING);
-
         $ticket->setDescription($ticketData['description']);
 
         $location = new Location();
         $location->setLatitude($ticketData['latitude']);
         $location->setLongitude($ticketData['longitude']);
         $ticket->setLocation($location);
+
+        $notifier = new Notifier();
+        $notifier->setName($ticketData['notifier_name']);
+        $notifier->setEmail($ticketData['notifier_email']);
+        $notifier->setPhone($ticketData['notifier_phone']);
+        $notifier->setTicket($ticket);
+        $ticket->setNotifier($notifier);
 
         $category = $this->getDoctrine()->getRepository('AppBundle\Entity\Category')->findOneById($ticketData['category']);
         if ( ! $category) {

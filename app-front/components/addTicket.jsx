@@ -6,12 +6,17 @@ import GMap from './gMap';
 const AddTicket = React.createClass({
     getInitialState () {
         return {
-            category: 1,
             categories: [],
             panel: 0,
+            stepCount: 5,
+            error: null,
             coordinates: {},
+            category: 1,
+            description: '',
             locationAddress: '',
-            error: null
+            notifierName: '',
+            notifierEmail: '',
+            notifierPhone: ''
         };
     },
 
@@ -26,36 +31,34 @@ const AddTicket = React.createClass({
         });
     },
 
-    setCategory (event) {
-        this.setState({
-            category: Number(event.target.value)
-        });
-    },
-
     addTicket () {
         const {latitude, longitude} = this.state.coordinates;
         const newTicket = {
-            description: this.description.value,
             latitude,
             longitude,
-            category: this.state.category
+            description: this.state.description,
+            category: this.state.category,
+            notifier_name: this.state.notifierName,
+            notifier_email: this.state.notifierEmail,
+            notifier_phone: this.state.notifierPhone
         };
 
         $.ajax({
             method: 'POST',
             url: '/api/tickets',
             data: newTicket,
-            success: () => this.showPanel(4),
+            success: () => this.showPanel(5),
             error: (jqhxr, error, message) => this.setState({error: message})
         });
     },
 
     renderCategories () {
         var buffer = [];
-            for (var i = 0; i < this.state.categories.length; i++ ) {
-                var html = <option key={this.state.categories[i].id} value={this.state.categories[i].id}>{this.state.categories[i].name}</option>;
-                buffer.push(html);
-            }
+        for (var i = 0; i < this.state.categories.length; i++) {
+            var html = <option key={this.state.categories[i].id}
+                               value={this.state.categories[i].id}>{this.state.categories[i].name}</option>;
+            buffer.push(html);
+        }
         return buffer;
     },
 
@@ -80,12 +83,16 @@ const AddTicket = React.createClass({
             () => <div className="panel">
                 <h2>Start</h2>
                 <div className="box thin-box">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
+                    <p>
+                        Witaj w systemie FixMyCity.<br/>
+                        Kliknij w 'Rozpocznij' aby wysłać zgłoszenie do Urzędu Miasta.
+                    </p>
                     <button
                         className="button button-red navigate arrow arrow-next button-center"
                         onClick={this.showPanel.bind(null, 1)}
                         type="button"
-                    >Rozpocznij</button>
+                    >Rozpocznij
+                    </button>
                 </div>
             </div>,
             () => {
@@ -99,9 +106,9 @@ const AddTicket = React.createClass({
                         <div className="box">
                             <ProgressList
                                 progress={1}
-                                steps={4}
+                                steps={this.state.stepCount}
                             />
-                            <p>Lorem ipsum Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
+                            <p>Wpisz miasto lub ulicę adresu, którego dotyczy zgłoszenie.</p>
                             <input
                                 className="form-control"
                                 onChange={setLocationAddress}
@@ -115,7 +122,8 @@ const AddTicket = React.createClass({
                                         className="button button-gray navigate arrow arrow-next"
                                         onClick={this.showPanel.bind(null, 2)}
                                         type="button"
-                                    >Dalej</button>
+                                    >Dalej
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -132,8 +140,9 @@ const AddTicket = React.createClass({
                     <div className="box">
                         <ProgressList
                             progress={2}
-                            steps={4}
+                            steps={this.state.stepCount}
                         />
+                        <p>Możesz lepiej określić lokalizacje lub przejść dalej.</p>
                         <GMap
                             address={this.state.locationAddress}
                             setCoordinates={setCoordinates}
@@ -145,70 +154,152 @@ const AddTicket = React.createClass({
                                     className="button button-gray navigate arrow arrow-prev"
                                     onClick={this.showPanel.bind(null, 1)}
                                     type="button"
-                                >Wstecz</button>
+                                >Wstecz
+                                </button>
                             </div>
                             <div className="col-sm-6">
                                 <button
                                     className="button button-gray navigate arrow arrow-next"
                                     onClick={this.showPanel.bind(null, 3)}
                                     type="button"
-                                >Dalej</button>
+                                >Dalej
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>);
+            },
+            () => {
+                const setDescription = (event) => this.setState({
+                    description: event.target.value
+                });
+
+                const setCategory = (event) => this.setState({
+                    category: Number(event.target.value)
+                });
+
+                return (<div className="panel">
+                    <h2>Opisz zgłoszenie</h2>
+                    <div className="box">
+                        <ProgressList
+                            progress={3}
+                            steps={this.state.stepCount}
+                        />
+                        <p>Opis zgłoszenia i kategoria. Tutaj możesz także dodać do zgłoszenia zdjęcie.</p>
+                        <textarea
+                            className="form-control"
+                            placeholder="Opis"
+                            onChange={setDescription}
+                        >{this.state.description}</textarea>
+                        <select
+                            className="form-control"
+                            onChange={setCategory}
+                            value={this.state.category}
+                        >
+                            {this.renderCategories()}
+                        </select>
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <button
+                                    className="button button-gray navigate arrow arrow-prev"
+                                    onClick={this.showPanel.bind(null, 2)}
+                                    type="button"
+                                >Wstecz
+                                </button>
+                            </div>
+                            <div className="col-sm-6">
+                                <button
+                                    className="button button-gray navigate arrow arrow-next"
+                                    onClick={this.showPanel.bind(null, 4)}
+                                    type="button"
+                                >Dalej
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>);
+            },
+            () => {
+                const setNotifierName = (event) => this.setState({
+                    notifierName: event.target.value
+                });
+
+                const setNotifierEmail = (event) => this.setState({
+                    notifierEmail: event.target.value
+                });
+
+                const setNotifierPhone = (event) => this.setState({
+                    notifierPhone: event.target.value
+                });
+
+                return (<div className="panel">
+                    <h2>Dane zgłaszającego</h2>
+                    <div className="box">
+                        <ProgressList
+                            progress={4}
+                            steps={this.state.stepCount}
+                        />
+                        <p>Podaj dane kontaktowe, abyśmy mogli Cię informać o postępach realizacji zgłoszenia.</p>
+                        <input
+                            className="form-control"
+                            onChange={setNotifierName}
+                            type="text"
+                            value={this.state.notifierName}
+                            placeholder="Imię i nazwisko"
+                        />
+                        <input
+                            className="form-control"
+                            onChange={setNotifierEmail}
+                            type="email"
+                            value={this.state.notifierEmail}
+                            placeholder="Adres e-mail"
+                        />
+                        <input
+                            className="form-control"
+                            onChange={setNotifierPhone}
+                            type="email"
+                            value={this.state.notifierPhone}
+                            placeholder="Numer telefonu (opcjonalnie)"
+                        />
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <button
+                                    className="button button-gray navigate arrow arrow-prev"
+                                    onClick={this.showPanel.bind(null, 3)}
+                                    type="button"
+                                >Wstecz
+                                </button>
+                            </div>
+                            <div className="col-sm-6">
+                                <button
+                                    className="button button-red navigate arrow arrow-next"
+                                    onClick={this.addTicket}
+                                    type="button"
+                                >Zakończ
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>);
             },
             () => <div className="panel">
-                <h2>Opisz zgłoszenie</h2>
-                <div className="box">
-                    <ProgressList
-                        progress={3}
-                        steps={4}
-                    />
-                    <p>Opisz zgłoszenie</p>
-                    <textarea
-                        className="form-control"
-                        placeholder="Opis"
-                        ref={r => (this.description = r)}
-                    ></textarea>
-                    <select
-                        className="form-control"
-                        onChange={this.setCategory}
-                        value={this.state.category}
-                    >
-                        {this.renderCategories()}
-                    </select>
-                    <div className="row">
-                        <div className="col-sm-6">
-                            <button
-                                className="button button-gray navigate arrow arrow-prev"
-                                onClick={this.showPanel.bind(null, 2)}
-                                type="button"
-                            >Wstecz</button>
-                        </div>
-                        <div className="col-sm-6">
-                            <button
-                                className="button button-red navigate arrow arrow-next"
-                                onClick={this.addTicket}
-                                type="button"
-                            >Zakończ</button>
-                        </div>
-                    </div>
-                </div>
-            </div>,
-            () => <div className="panel">
                 <h2>Zgłoszenie zostało wysłane</h2>
                 <div className="box thin-box">
                     <ProgressList
-                        progress={4}
-                        steps={4}
+                        progress={5}
+                        steps={this.state.stepCount}
                     />
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
+                    <p>
+                        Dziękujemy za zgłoszenie.<br/>
+                        Wysłaliśmy potwierdzenie otrzymania zgłoszenia na Twojego maila, gdzie również będziemy Cię
+                        informować o postępach realizacji.
+                    </p>
                     <button
                         className="button button-red navigate button-center"
                         onClick={this.reset}
                         type="button"
-                    >Powrót na stronę główną</button>
+                    >Powrót na stronę główną
+                    </button>
                 </div>
             </div>
         ];
@@ -229,7 +320,8 @@ const AddTicket = React.createClass({
             return null;
         }
 
-        return <div className="alert alert-danger">Due to an error we could not save your ticket. Please, <a onClick={this.reset} style={{cursor: 'pointer'}}><strong>try again</strong></a> in a second.</div>;
+        return <div className="alert alert-danger">Due to an error we could not save your ticket. Please, <a
+            onClick={this.reset} style={{cursor: 'pointer'}}><strong>try again</strong></a> in a second.</div>;
     },
 
     render () {
@@ -245,6 +337,7 @@ const AddTicket = React.createClass({
                                 {this.renderPanel(2)}
                                 {this.renderPanel(3)}
                                 {this.renderPanel(4)}
+                                {this.renderPanel(5)}
                             </div>
                         </form>
                     </div>
