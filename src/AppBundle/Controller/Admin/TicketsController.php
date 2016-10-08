@@ -18,21 +18,33 @@ class TicketsController extends BaseAdminController
     }
 
     /**
-     * @Route("/admin/ticket/{ticketId}/status/{status}", name="adminUpdateTicket")
+     * @Route("/admin/ticket/{ticketId}/start", name="adminStartProgressOnTicket")
      *
      * @param int $ticketId
-     * @param int $status
      *
      * @return RedirectResponse
      */
-    public function updateTicketStatusAction(int $ticketId, int $status)
+    public function startProgressOnTicketAction(int $ticketId)
     {
-        $this->getTicketsService()->updateTicketStatus($ticketId, $status);
+        $this->getTicketsService()->startProgressOnTicket($ticketId);
         return $this->redirectToRoute('adminTickets');
     }
 
     /**
-     * @Route("/admin/ticket/{ticketId}/close", name="adminCancelTicket")
+     * @Route("/admin/ticket/{ticketId}/close", name="adminCloseTicket")
+     *
+     * @param int $ticketId
+     *
+     * @return RedirectResponse
+     */
+    public function closeTicket(int $ticketId)
+    {
+        $this->getTicketsService()->closeTicket($ticketId);
+        return $this->redirectToRoute('adminTickets');
+    }
+
+    /**
+     * @Route("/admin/ticket/{ticketId}/cancel", name="adminCancelTicket")
      *
      * @param int $ticketId
      *

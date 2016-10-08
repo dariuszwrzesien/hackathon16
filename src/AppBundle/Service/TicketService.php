@@ -32,13 +32,10 @@ class TicketService
 
     /**
      * @param int $ticketId
-     * @param int $newStatus
      */
-    public function updateTicketStatus(int $ticketId, int $newStatus)
+    public function startProgressOnTicket(int $ticketId)
     {
-        $ticket = $this->getTicket($ticketId);
-        $ticket->setStatus($newStatus);
-        $this->saveTicket($ticket);
+        $this->updateTicketStatus($ticketId, Ticket::IN_PROGRESS);
     }
 
     /**
@@ -46,8 +43,25 @@ class TicketService
      */
     public function cancelTicket(int $ticketId)
     {
+        $this->updateTicketStatus($ticketId, Ticket::CANCELED);
+    }
+
+    /**
+     * @param int $ticketId
+     */
+    public function closeTicket(int $ticketId)
+    {
+        $this->updateTicketStatus($ticketId, Ticket::CLOSED);
+    }
+
+    /**
+     * @param int $ticketId
+     * @param int $newStatus
+     */
+    private function updateTicketStatus(int $ticketId, int $newStatus)
+    {
         $ticket = $this->getTicket($ticketId);
-        $ticket->setStatus(Ticket::CANCELED);
+        $ticket->setStatus($newStatus);
         $this->saveTicket($ticket);
     }
 

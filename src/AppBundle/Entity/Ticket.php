@@ -28,11 +28,6 @@ class Ticket
         self::CLOSED => 'zakończone',
     ];
 
-    static private $actionNames = [
-        self::WAITING => 'rozpocznij',
-        self::IN_PROGRESS => 'zakończ'
-    ];
-
     static private $allowedTransitions = [
         self::WAITING => [self::IN_PROGRESS, self::CANCELED],
         self::IN_PROGRESS => [self::CLOSED, self::CANCELED],
@@ -282,7 +277,11 @@ class Ticket
      */
     public function getStatusName()
     {
-        return self::getNameFromArray($this->getStatus(), self::$statusNames);
+        if (array_key_exists($this->getStatus(), self::$statusNames)) {
+            return self::$statusNames[$this->getStatus()];
+        } else {
+            return 'nieznane';
+        }
     }
 
     /**
@@ -314,7 +313,23 @@ class Ticket
      */
     public function isActive()
     {
-        return !($this->isClosed() || $this->isCanceled());
+        return $this->isWaiting() || $this->isInProgress();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWaiting()
+    {
+        return $this->getStatus() === self::WAITING;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInProgress()
+    {
+        return $this->getStatus() === self::IN_PROGRESS;
     }
 
     /**
@@ -331,22 +346,6 @@ class Ticket
     public function isCanceled()
     {
         return $this->getStatus() === self::CANCELED;
-    }
-
-    /**
-     * @return int
-     */
-    public function getNextAction()
-    {
-        return intval($this->getStatus()) + 1;
-    }
-
-    /**
-     * @return string
-     */
-    public function getActionName()
-    {
-        return self::getNameFromArray($this->getStatus(), self::$actionNames);
     }
 
     /**
@@ -414,20 +413,5 @@ class Ticket
         }
 
         return in_array($newStatus, self::$allowedTransitions[$oldStatus], true);
-    }
-
-    /**
-     * @param int $statusId
-     * @param array $arrayType
-     *
-     * @return string
-     */
-    static private function getNameFromArray(int $statusId, array $arrayType)
-    {
-        if (array_key_exists($statusId, $arrayType)) {
-            return $arrayType[$statusId];
-        } else {
-            return 'nieznane';
-        }
     }
 }

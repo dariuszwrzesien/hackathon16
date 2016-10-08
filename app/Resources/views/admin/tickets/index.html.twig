@@ -27,9 +27,15 @@
                     <a class="btn btn-round btn-danger" href="{{ path('adminCancelTicket', {'ticketId': ticket.getId()}) }}">
                         zamknij
                     </a>
-                    <a class="btn btn-round btn-success" href="{{ path('adminUpdateTicket', {'ticketId': ticket.getId(), 'status': ticket.getNextAction()}) }}">
-                        {{ ticket.getActionName() }}
-                    </a>
+                    {% if ticket.isWaiting() %}
+                        <a class="btn btn-round btn-success" href="{{ path('adminStartProgressOnTicket', {'ticketId': ticket.getId()}) }}">
+                            rozpocznij
+                        </a>
+                    {% else %}
+                        <a class="btn btn-round btn-success" href="{{ path('adminCloseTicket', {'ticketId': ticket.getId()}) }}">
+                            zakończ
+                        </a>
+                    {% endif %}
                 {% endif %}
                 </td>
             </tr>
