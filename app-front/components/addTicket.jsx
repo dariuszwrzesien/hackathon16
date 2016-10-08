@@ -172,7 +172,7 @@ const AddTicket = React.createClass({
                             <div className="row">
                                 <div className="col-sm-offset-6 col-sm-6">
                                     <button
-                                        className="button button-gray navigate arrow arrow-next"
+                                        className="button button-red navigate arrow arrow-next"
                                         onClick={this.showPanel.bind(null, 2)}
                                         type="button"
                                     >Dalej
@@ -212,7 +212,7 @@ const AddTicket = React.createClass({
                             </div>
                             <div className="col-sm-6">
                                 <button
-                                    className="button button-gray navigate arrow arrow-next"
+                                    className="button button-red navigate arrow arrow-next"
                                     onClick={this.showPanel.bind(null, 3)}
                                     type="button"
                                 >Dalej
@@ -243,7 +243,8 @@ const AddTicket = React.createClass({
                             className="form-control"
                             placeholder="Opis"
                             onChange={setDescription}
-                        >{this.state.description}</textarea>
+                            value={this.state.description}
+                        ></textarea>
                         <select
                             className="form-control"
                             onChange={setCategory}
@@ -266,7 +267,7 @@ const AddTicket = React.createClass({
                             </div>
                             <div className="col-sm-6">
                                 <button
-                                    className="button button-gray navigate arrow arrow-next"
+                                    className="button button-red navigate arrow arrow-next"
                                     onClick={this.showPanel.bind(null, 4)}
                                     type="button"
                                 >Dalej

@@ -45,3 +45,12 @@ To build the front application, go to `./app-front` in shell of your choice and 
 To build the application without installing `node_modules` simply run `npm run build` in `./app-front`
 
 When developing the application you don't have to build it every time after making changes. Run `npm run build:dev` - it will run the build on file changes in `./app-front`
+
+## ADMINISTRATION PANEL
+
+Go to url: ```/admin``` and login using credentials:
+ 
+|Username|Password|Role|
+|--------|--------|----|
+|admin|admin|ROLE_ADMIN|
+|worker|worker|ROLE_WORKER|
