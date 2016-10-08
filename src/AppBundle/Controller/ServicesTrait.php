@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Service\CategoryService;
+use AppBundle\Service\CommentService;
 use AppBundle\Service\TicketService;
 
 trait ServicesTrait
@@ -13,6 +14,14 @@ trait ServicesTrait
     public function getCategoryService() : CategoryService
     {
         return $this->get('category.service');
+    }
+
+    /**
+     * @return CommentService
+     */
+    public function getCommentService() : CommentService
+    {
+        return $this->get('comment.service');
     }
 
     /**
