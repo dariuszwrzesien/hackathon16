@@ -24,8 +24,8 @@ class CommentsController extends BaseAdminController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment = new Comment();
-            $comment->setCreated(new \DateTime());
             $comment->setDescription($form->getData()->description);
+            $comment->setCreated(new \DateTime());
             $comment->setTicket($this->getDoctrine()
                 ->getRepository('AppBundle\Entity\Ticket')
                 ->find($id));
@@ -35,9 +35,7 @@ class CommentsController extends BaseAdminController
             $em->flush();
         }
 
-        $comments = $this->getDoctrine()
-            ->getRepository('AppBundle\Entity\Comment')
-            ->findByTicket($id);
+        $comments = $this->getCommentService()->getCommentsByTicketId($id);
 
         return $this->render('admin/comments/index.html.twig', array(
             'comments' => $comments,
