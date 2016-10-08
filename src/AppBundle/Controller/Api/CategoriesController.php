@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Category;
 use FOS\RestBundle\Controller\FOSRestController;

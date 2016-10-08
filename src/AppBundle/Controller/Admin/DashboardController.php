@@ -1,11 +1,10 @@
 <?php
 
-namespace AdminBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DashboardController extends Controller
+class DashboardController extends BaseAdminController
 {
     /**
      * @Route("/admin/", name="admin")

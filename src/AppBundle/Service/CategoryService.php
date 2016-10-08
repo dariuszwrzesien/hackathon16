@@ -6,7 +6,6 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 
 class CategoryService
 {
-
     /**
      * @var Registry
      */

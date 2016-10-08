@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Attachment;
 use AppBundle\Entity\Category;
