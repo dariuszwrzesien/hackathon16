@@ -34,6 +34,9 @@
                                     <ul class="nav child_menu">
                                         <li><a href="/admin">Tablica</a></li>
                                         <li><a href="/admin/tickets">Zgłoszenia</a></li>
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            <li><a href="/admin/users">Użytkownicy</a></li>
+                                        {% endif %}
                                     </ul>
                                 </li>
                             </ul>
@@ -52,6 +55,9 @@
                         </div>
 
                         <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="#">Zalogowany jako: {{ app.user.username }}</a>
+                            </li>
                             <li role="presentation" class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-envelope-o"></i>
