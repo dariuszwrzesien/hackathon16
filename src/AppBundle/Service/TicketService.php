@@ -8,6 +8,8 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 
 class TicketService
 {
+    const TICKET_LIMIT = 25;
+
     /**
      * @var Registry
      */
@@ -24,10 +26,11 @@ class TicketService
     /**
      * @return array
      */
-    public function getAllTickets()
+    public function getAllTickets($pageNumber)
     {
         $repository = $this->registry->getRepository('AppBundle\Entity\Ticket');
-        return $repository->findBy([], ['created' => 'DESC']);
+        $offset = self::TICKET_LIMIT * ($pageNumber - 1);
+        return $repository->findBy([], ['created' => 'DESC'], self::TICKET_LIMIT, $offset);
     }
 
     /**

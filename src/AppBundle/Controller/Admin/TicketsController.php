@@ -2,18 +2,29 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\Ticket;
+use AppBundle\Service\TicketService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class TicketsController extends BaseAdminController
 {
     /**
-     * @Route("/admin/tickets", name="adminTickets")
+     * @Route("/admin/tickets/{page}", name="adminTickets")
+     *
+     * @param int $page
+     *
+     * @return Response
      */
-    public function indexAction()
+    public function indexAction($page = 1)
     {
+        $tickets = $this->getTicketsService()->getAllTickets($page);
         return $this->render('admin/tickets/index.html.twig', [
-            'tickets' => $this->getTicketsService()->getAllTickets()
+            'tickets' => $tickets,
+            'limit' => TicketService::TICKET_LIMIT,
+            'maxPages' => ceil(count($tickets) / TicketService::TICKET_LIMIT),
+            'thisPage' => $page
         ]);
     }
 
