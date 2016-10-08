@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\TicketRepository;
+use ArrayObject;
 use Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
