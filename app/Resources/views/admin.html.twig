@@ -6,87 +6,86 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}FixMyCity{% endblock %}</title>
 
     <link href="{{ asset('admin/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/custom.min.css') }}" rel="stylesheet">
     {% block stylesheets %}{% endblock %}
 </head>
-
 <body class="nav-md">
-<div class="container body">
-    <div class="main_container">
-        <div class="col-md-3 left_col">
-            <div class="left_col scroll-view">
-                <div class="navbar nav_title" style="border: 0;">
-                    <a href="/admin" class="site_title"><i class="fa fa-paw"></i> <span>Zgłoszeniownia</span></a>
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="/admin" class="site_title"><i class="fa fa-paw"></i> <span>Zgłoszeniownia</span></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>General</h3>
+                            <ul class="nav side-menu">
+                                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="/admin">Dashboard</a></li>
+                                        <li><a href="/admin/tickets">Tickets</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
                 </div>
+            </div>
 
-                <div class="clearfix"></div>
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav class="" role="navigation">
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
 
-                <br />
-
-                <!-- sidebar menu -->
-                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                    <div class="menu_section">
-                        <h3>General</h3>
-                        <ul class="nav side-menu">
-                            <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="/admin">Dashboard</a></li>
-                                    <li><a href="/admin/tickets">Tickets</a></li>
-                                </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li role="presentation" class="dropdown">
+                                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span class="badge bg-green">0</span>
+                                </a>
                             </li>
                         </ul>
-                    </div>
+                    </nav>
                 </div>
-                <!-- /sidebar menu -->
             </div>
-        </div>
+            <!-- /top navigation -->
 
-        <!-- top navigation -->
-        <div class="top_nav">
-            <div class="nav_menu">
-                <nav class="" role="navigation">
-                    <div class="nav toggle">
-                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-                    </div>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li role="presentation" class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-envelope-o"></i>
-                                <span class="badge bg-green">0</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+            <!-- content -->
+            <div class="right_col" role="main">
+                {% block body %}{% endblock %}
             </div>
-        </div>
-        <!-- /top navigation -->
+            <!-- /content -->
 
-        <!-- content -->
-        <div class="right_col" role="main">
-            {% block body %}{% endblock %}
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Future Processing
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
         </div>
-        <!-- /content -->
-
-        <!-- footer content -->
-        <footer>
-            <div class="pull-right">
-                Future Processing
-            </div>
-            <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
     </div>
-</div>
 
-<script src="{{ asset('admin/js/jquery.min.js') }}"></script>
-<script src="{{ asset('admin/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('admin/js/custom.min.js') }}"></script>
-{% block javascripts %}{% endblock %}
+    <script src="{{ asset('admin/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('admin/js/custom.min.js') }}"></script>
+    {% block javascripts %}{% endblock %}
 
-</body>
-</html>
+    </body>
+    </html>
