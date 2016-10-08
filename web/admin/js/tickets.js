@@ -18,6 +18,7 @@
         $tr.append('<td>' + row.category_name + '</td>');
         $tr.append('<td>' + row.description + '</td>');
         $tr.append('<td>' + row.status + '</td>');
+        $tr.append('<td data-ticket-id="' + row.id + '">' + createComments(row.comments) + '</td>');
         $tr.append('<td data-ticket-id="' + row.id + '">' + createAction(row.status) + '</td>');
 
         return $tr;
@@ -40,6 +41,12 @@
         }
 
         button += prepareButton('cancel', 'btn-danger', 4);
+        return button
+    }
+
+    function createComments (comments) {
+        var button = '';
+        button += prepareButton(comments, 'btn-info', 4);
         return button
     }
 
