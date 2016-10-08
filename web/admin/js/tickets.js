@@ -18,7 +18,7 @@
         $tr.append('<td>' + row.category_name + '</td>');
         $tr.append('<td>' + row.description + '</td>');
         $tr.append('<td>' + row.status + '</td>');
-        $tr.append('<td data-ticket-id="' + row.id + '">' + createComments((row.comments).length) + '</td>');
+        $tr.append('<td data-ticket-id="' + row.id + '">' + createComments(row.comments, row.id) + '</td>');
         $tr.append('<td data-ticket-id="' + row.id + '">' + createAction(row.status) + '</td>');
 
         return $tr;
@@ -44,9 +44,9 @@
         return button
     }
 
-    function createComments (comments) {
+    function createComments (comments, ticket) {
         var button = '';
-        button += prepareRedirectButton(comments, 'btn-info btn-comment', 4, "/admin/comments/123");
+        button += prepareRedirectButton(comments.length, 'btn-info btn-comment', 4, "/admin/comments/" + ticket);
         return button
     }
 

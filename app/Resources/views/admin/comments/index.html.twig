@@ -12,7 +12,6 @@
             </tr>
         </thead>
         <tbody>
-
                 {% for comment in comments %}
                     <tr>
                         <td>{{ comment.created|date("d-m-Y") }}</td>
@@ -21,6 +20,7 @@
                 {% endfor %}
         </tbody>
     </table>
+    {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
 {% endblock %}
 {% block javascripts %}
 

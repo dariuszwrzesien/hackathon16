@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\Comment;
+use AppBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -10,7 +12,6 @@ class CommentsController extends BaseAdminController
     /**
      * @Route("/admin/comments/{id}", requirements={"id" = "\d+"}, name="adminComments")
      *
-     * @param ParamFetcher $fetcher
      * @return array();
      */
     public function indexAction($id)
@@ -23,8 +24,11 @@ class CommentsController extends BaseAdminController
             throw $this->createNotFoundException();
         }
 
+        $form = $this->createForm(CommentType::class, new Comment());
+
         return $this->render('admin/comments/index.html.twig', array(
-            'comments' => $comments
+            'comments' => $comments,
+            'form' => $form->createView()
         ));
     }
 }
