@@ -12,7 +12,7 @@ class CommentsController extends BaseAdminController
     /**
      * @Route("/admin/comments/{id}", requirements={"id" = "\d+"}, name="adminComments")
      *
-     * @return array();
+     * @return Response
      */
     public function indexAction($id)
     {
