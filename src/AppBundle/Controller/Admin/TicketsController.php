@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller\Admin;
 
-use AppBundle\Entity\Status;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -33,15 +32,15 @@ class TicketsController extends BaseAdminController
     }
 
     /**
-     * @Route("/admin/ticket/{ticketId}/close", name="adminCloseTicket")
+     * @Route("/admin/ticket/{ticketId}/close", name="adminCancelTicket")
      *
      * @param int $ticketId
      *
      * @return RedirectResponse
      */
-    public function closeTicketAction(int $ticketId)
+    public function cancelTicketAction(int $ticketId)
     {
-        $this->getTicketsService()->updateTicketStatus($ticketId, Status::CANCELED);
+        $this->getTicketsService()->cancelTicket($ticketId);
         return $this->redirectToRoute('adminTickets');
     }
 }

@@ -21,9 +21,10 @@
                 <td>{{ ticket.getCategoryName() }}</td>
                 <td>{{ ticket.getDescription() }}</td>
                 <td>{{ ticket.getStatusName() }}</td>
+                <td>{{ ticket.getComments().count() }}</td>
                 <td>
                 {% if ticket.isActive() %}
-                    <a class="btn btn-round btn-danger" href="{{ path('adminCloseTicket', {'ticketId': ticket.getId()}) }}">
+                    <a class="btn btn-round btn-danger" href="{{ path('adminCancelTicket', {'ticketId': ticket.getId()}) }}">
                         zamknij
                     </a>
                     <a class="btn btn-round btn-success" href="{{ path('adminUpdateTicket', {'ticketId': ticket.getId(), 'status': ticket.getNextAction()}) }}">

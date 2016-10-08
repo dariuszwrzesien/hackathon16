@@ -4,8 +4,21 @@ namespace AppBundle\Service;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
-class CategoryService extends BaseService
+class CategoryService
 {
+    /**
+     * @var Registry
+     */
+    protected $registry;
+
+    /**
+     * @param Registry $registry
+     */
+    public function __construct(Registry $registry)
+    {
+        $this->registry = $registry;
+    }
+
     /**
      * @return array
      */
