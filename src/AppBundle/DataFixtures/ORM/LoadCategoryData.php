@@ -7,6 +7,9 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadCategoryData implements FixtureInterface
 {
+    /**
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $prefillCategories = [

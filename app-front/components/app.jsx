@@ -1,6 +1,7 @@
 import React from 'react';
 import DOM from 'react-dom';
-import {Router, Route, IndexRoute, hashHistory, Link} from 'react-router';
+import {Router, Route, IndexRoute, hashHistory} from 'react-router';
+
 import '../sass/main.scss';
 import AddTicket from './addTicket';
 
@@ -35,18 +36,11 @@ const App = React.createClass({
     }
 });
 
-const Nested = React.createClass({
-    render () {
-        return (<div>nested route</div>);
-    }
-});
-
 const renderApp = () => {
     DOM.render(
         <Router history={hashHistory}>
             <Route component={App} path="/">
                 <IndexRoute component={AddTicket} />
-                <Route component={Nested} path="nested" />
             </Route>
         </Router>,
         document.getElementById('main-container')

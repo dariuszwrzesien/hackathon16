@@ -1,0 +1,41 @@
+build_settings:
+  ignore:
+    - "bin"
+    - "var"
+    - "vendor"
+    - "app-front"
+    - "web"
+
+setup:
+  composer:
+    action: "install"
+
+test:
+  lint:
+  php_code_sniffer:
+    allowed_warnings: 0
+    allowed_errors: 0
+    standard: "PSR1,PSR2"
+  php_unit:
+  php_docblock_checker:
+    allowed_warnings: 0
+    skip_classes: true
+    path: "src"
+  php_loc:
+    directory: "src"
+  technical_debt:
+  php_mess_detector:
+    rules:
+      - "cleancode"
+      - "codesize"
+      - "controversial"
+      - "design"
+      - "naming"
+      - "unusedcode"
+  php_cpd:
+    standard: "PSR2"
+    path: "app"
+
+complete:
+  email:
+    addresses: ["apietka@future-processing.com", "dwrzesien@future-processing.com", "mksiazek@future-processing.com"]
