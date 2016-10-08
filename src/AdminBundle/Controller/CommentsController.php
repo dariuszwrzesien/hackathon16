@@ -12,7 +12,6 @@ class CommentsController extends Controller
      */
     public function indexAction($id)
     {
-        var_dump($id);
         return $this->render('admin/comments/index.html.twig');
     }
 }
