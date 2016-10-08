@@ -8,25 +8,40 @@ const TakePicture = React.createClass({
 
   getInitialState () {
     return {
-      url: ''
+      imageUrl : '',
+      fileName: '',
+      displayImage: URL.createObjectURL
     };
   },
 
   getPicture (event) {
     if (!event.target.files.length) {
       this.props.clearPicture();
+      this.setState({imageUrl: ''});
       return;
     }
 
     const file = event.target.files[0];
     this.props.newPictureTaken(file);
+    this.setState({
+      imageUrl: URL.createObjectURL(file),
+      fileName: file.name
+    });
   },
 
   render () {
     return (
       <div>
-        <img src={this.state.url} />
-        <input name="picture" type="file" accept="image/*" onChange={this.getPicture} />
+        <label htmlFor="takePicture">{this.state.imageUrl.length ? 'Zmień obrazek' : 'Dołącz obrazek'}{!this.state.displayImage ? this.state.fileName : ''}</label>
+        <input
+          accept="image/*"
+          id="takePicture"
+          name="picture"
+          onChange={this.getPicture}
+          style={{display: 'none'}}
+          type="file"
+        />
+        { this.state.displayImage ? <img src={this.state.imageUrl} style={{maxHeight: '200px'}} /> : null }
       </div>
     );
   }
