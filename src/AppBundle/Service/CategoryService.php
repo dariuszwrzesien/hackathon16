@@ -9,7 +9,7 @@ class CategoryService
     /**
      * @var Registry
      */
-    protected $registry;
+    private $registry;
 
     /**
      * @param Registry $registry

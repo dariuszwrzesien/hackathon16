@@ -314,7 +314,23 @@ class Ticket
      */
     public function isActive()
     {
-        return $this->getStatus() !== self::CLOSED && $this->getStatus() !== self::CANCELED;
+        return !$this->isClosed() && !$this->isCanceled();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isClosed()
+    {
+        return $this->getStatus() === self::CLOSED;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCanceled()
+    {
+        return $this->getStatus() !== self::CANCELED;
     }
 
     /**
