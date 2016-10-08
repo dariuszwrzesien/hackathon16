@@ -67,6 +67,11 @@ class Ticket
     private $category;
 
     /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="ticket")
+     */
+    private $comments;
+
+    /**
      * @ORM\OneToMany(targetEntity="Attachment", mappedBy="ticket")
      */
     private $attachments;
@@ -244,6 +249,31 @@ class Ticket
     public function getStatusName()
     {
         return Status::getStatusName($this->getStatus());
+    }
+
+    /**
+     * Set comments
+     *
+     * @param ArrayObject $comments
+     *
+     * @return Ticket
+     */
+    public function setComments(ArrayObject $comments)
+    {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return ArrayObject
+     */
+    public function getComments()
+    {
+        return 10;
+//        return $this->comments;
     }
 
     /**
