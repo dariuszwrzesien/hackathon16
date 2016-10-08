@@ -2,7 +2,7 @@ import React from 'react';
 import DOM from 'react-dom';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 
-import '../sass/main.scss';
+import '../less/main.less';
 import AddTicket from './addTicket';
 
 const App = React.createClass({

@@ -30,8 +30,8 @@ module.exports = {
                 test: [/\.json$/]
             },
             {
-              test: /\.scss$/,
-              loaders: ["style", "css", "sass"]
+              test: /\.less$/,
+              loaders: ["style", "css", "less"]
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
