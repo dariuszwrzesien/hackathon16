@@ -6,12 +6,17 @@ import GMap from './gMap';
 const AddTicket = React.createClass({
     getInitialState () {
         return {
-            category: 1,
             categories: [],
             panel: 0,
+            stepCount: 5,
+            error: null,
             coordinates: {},
+            category: 1,
+            description: '',
             locationAddress: '',
-            error: null
+            notifierName: '',
+            notifierEmail: '',
+            notifierPhone: ''
         };
     },
 
@@ -26,26 +31,23 @@ const AddTicket = React.createClass({
         });
     },
 
-    setCategory (event) {
-        this.setState({
-            category: Number(event.target.value)
-        });
-    },
-
     addTicket () {
         const {latitude, longitude} = this.state.coordinates;
         const newTicket = {
-            description: this.description.value,
             latitude,
             longitude,
-            category: this.state.category
+            description: this.state.description,
+            category: this.state.category,
+            notifier_name: this.state.notifierName,
+            notifier_email: this.state.notifierEmail,
+            notifier_phone: this.state.notifierPhone
         };
 
         $.ajax({
             method: 'POST',
             url: '/api/tickets',
             data: newTicket,
-            success: () => this.showPanel(4),
+            success: () => this.showPanel(5),
             error: (jqhxr, error, message) => this.setState({error: message})
         });
     },
@@ -99,7 +101,7 @@ const AddTicket = React.createClass({
                         <div className="box">
                             <ProgressList
                                 progress={1}
-                                steps={4}
+                                steps={this.state.stepCount}
                             />
                             <p>Lorem ipsum Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
                             <input
@@ -132,7 +134,7 @@ const AddTicket = React.createClass({
                     <div className="box">
                         <ProgressList
                             progress={2}
-                            steps={4}
+                            steps={this.state.stepCount}
                         />
                         <GMap
                             address={this.state.locationAddress}
@@ -158,50 +160,124 @@ const AddTicket = React.createClass({
                     </div>
                 </div>);
             },
-            () => <div className="panel">
-                <h2>Opisz zgłoszenie</h2>
-                <div className="box">
-                    <ProgressList
-                        progress={3}
-                        steps={4}
-                    />
-                    <p>Opisz zgłoszenie</p>
-                    <textarea
-                        className="form-control"
-                        placeholder="Opis"
-                        ref={r => (this.description = r)}
-                    ></textarea>
-                    <select
-                        className="form-control"
-                        onChange={this.setCategory}
-                        value={this.state.category}
-                    >
-                        {this.renderCategories()}
-                    </select>
-                    <div className="row">
-                        <div className="col-sm-6">
-                            <button
-                                className="button button-gray navigate arrow arrow-prev"
-                                onClick={this.showPanel.bind(null, 2)}
-                                type="button"
-                            >Wstecz</button>
-                        </div>
-                        <div className="col-sm-6">
-                            <button
-                                className="button button-red navigate arrow arrow-next"
-                                onClick={this.addTicket}
-                                type="button"
-                            >Zakończ</button>
+            () => {
+                const setDescription = (event) => this.setState({
+                    description: event.target.value
+                });
+
+                const setCategory = (event) => this.setState({
+                    category: Number(event.target.value)
+                });
+
+                return (<div className="panel">
+                    <h2>Opisz zgłoszenie</h2>
+                    <div className="box">
+                        <ProgressList
+                            progress={3}
+                            steps={this.state.stepCount}
+                        />
+                        <p>Opisz zgłoszenie</p>
+                        <textarea
+                            className="form-control"
+                            placeholder="Opis"
+                            onChange={setDescription}
+                        >{this.state.description}</textarea>
+                        <select
+                            className="form-control"
+                            onChange={setCategory}
+                            value={this.state.category}
+                        >
+                            {this.renderCategories()}
+                        </select>
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <button
+                                    className="button button-gray navigate arrow arrow-prev"
+                                    onClick={this.showPanel.bind(null, 2)}
+                                    type="button"
+                                >Wstecz
+                                </button>
+                            </div>
+                            <div className="col-sm-6">
+                                <button
+                                    className="button button-gray navigate arrow arrow-next"
+                                    onClick={this.showPanel.bind(null, 4)}
+                                    type="button"
+                                >Dalej
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>,
+                </div>);
+            },
+            () => {
+                const setNotifierName = (event) => this.setState({
+                    notifierName: event.target.value
+                });
+
+                const setNotifierEmail = (event) => this.setState({
+                    notifierEmail: event.target.value
+                });
+
+                const setNotifierPhone = (event) => this.setState({
+                    notifierPhone: event.target.value
+                });
+
+                return (<div className="panel">
+                    <h2>Dane zgłaszającego</h2>
+                    <div className="box">
+                        <ProgressList
+                            progress={4}
+                            steps={this.state.stepCount}
+                        />
+                        <p>Imię i nazwisko</p>
+                        <input
+                            className="form-control"
+                            onChange={setNotifierName}
+                            type="text"
+                            value={this.state.notifierName}
+                        />
+                        <p>Adres e-mail</p>
+                        <input
+                            className="form-control"
+                            onChange={setNotifierEmail}
+                            type="email"
+                            value={this.state.notifierEmail}
+                        />
+                        <p>Numer telefonu</p>
+                        <input
+                            className="form-control"
+                            onChange={setNotifierPhone}
+                            type="email"
+                            value={this.state.notifierPhone}
+                        />
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <button
+                                    className="button button-gray navigate arrow arrow-prev"
+                                    onClick={this.showPanel.bind(null, 3)}
+                                    type="button"
+                                >Wstecz
+                                </button>
+                            </div>
+                            <div className="col-sm-6">
+                                <button
+                                    className="button button-red navigate arrow arrow-next"
+                                    onClick={this.addTicket}
+                                    type="button"
+                                >Zakończ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>);
+            },
             () => <div className="panel">
                 <h2>Zgłoszenie zostało wysłane</h2>
                 <div className="box thin-box">
                     <ProgressList
-                        progress={4}
-                        steps={4}
+                        progress={5}
+                        steps={this.state.stepCount}
                     />
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
                     <button
@@ -245,6 +321,7 @@ const AddTicket = React.createClass({
                                 {this.renderPanel(2)}
                                 {this.renderPanel(3)}
                                 {this.renderPanel(4)}
+                                {this.renderPanel(5)}
                             </div>
                         </form>
                     </div>
