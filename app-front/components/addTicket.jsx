@@ -2,6 +2,7 @@ import React from 'react';
 
 import ProgressList from './progressList';
 import GMap from './gMap';
+import TakePicture from './takePicture';
 
 const AddTicket = React.createClass({
     getInitialState () {
@@ -16,7 +17,10 @@ const AddTicket = React.createClass({
             locationAddress: '',
             notifierName: '',
             notifierEmail: '',
-            notifierPhone: ''
+            notifierPhone: '',
+            error: null,
+            pictureFile: null,
+            uploadAttachment: {}
         };
     },
 
@@ -34,20 +38,68 @@ const AddTicket = React.createClass({
     addTicket () {
         const {latitude, longitude} = this.state.coordinates;
         const newTicket = {
-            latitude,
-            longitude,
-            description: this.state.description,
-            category: this.state.category,
-            notifier_name: this.state.notifierName,
-            notifier_email: this.state.notifierEmail,
-            notifier_phone: this.state.notifierPhone
+          notifier_name: this.state.notifierName,
+          notifier_email: this.state.notifierEmail,
+          notifier_phone: this.state.notifierPhone,
+          description: this.state.description,
+          latitude,
+          longitude,
+          category: this.state.category
+        };
+
+        const uploadAttachment = (ticketId) => {
+            if (!this.state.pictureFile) {
+              return;
+            }
+
+            this.setState(oldState => {
+              return {
+                uploadingAttachment: {
+                  ...oldState.uploadingAttachment,
+                  uploading: true
+                }
+              };
+            });
+
+            const attachmentData = new FormData();
+            attachmentData.append('attachment', this.state.pictureFile);
+
+            $.ajax({
+              type: 'POST',
+              url: `/api/tickets/${ticketId}/attachments`,
+              data: attachmentData,
+              processData: false,
+              contentType: false,
+              cache: false,
+              error: (jqhxr, error, message) => this.setState(oldState => {
+                return {
+                  uploadingAttachment: {
+                    ...oldState.uploadingAttachment,
+                    uploading: false,
+                    error: message
+                  }
+                };
+              }),
+              success: () => this.setState(oldState => {
+                return {
+                  uploadAttachment: {
+                    ...oldState.uploadAttachment,
+                    uploading: false,
+                    uploaded: true
+                  }
+                };
+              })
+            });
         };
 
         $.ajax({
-            method: 'POST',
+            type: 'POST',
             url: '/api/tickets',
             data: newTicket,
-            success: () => this.showPanel(5),
+            success: ticketId => {
+              this.showPanel(5);
+              uploadAttachment(ticketId);
+            },
             error: (jqhxr, error, message) => this.setState({error: message})
         });
     },
@@ -189,6 +241,10 @@ const AddTicket = React.createClass({
                         >
                             {this.renderCategories()}
                         </select>
+                        <TakePicture 
+                          newPictureTaken={pictureFile => this.setState({pictureFile})}
+                          clearPicture={() => this.setState({pictureFile: null})}
+                        />
                         <div className="row">
                             <div className="col-sm-6">
                                 <button
