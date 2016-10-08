@@ -3,9 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Service\CategoryService;
-use FOS\RestBundle\Controller\FOSRestController;
 
-class BaseApiController extends FOSRestController
+trait ServicesTrait
 {
     /**
      * @return CategoryService
