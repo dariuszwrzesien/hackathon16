@@ -3,6 +3,7 @@ import React from 'react';
 import ProgressList from './progressList';
 import GMap from './gMap';
 import TakePicture from './takePicture';
+import AttachmentUpload from './attachmentUpload';
 
 const AddTicket = React.createClass({
     getInitialState () {
@@ -20,7 +21,7 @@ const AddTicket = React.createClass({
             notifierPhone: '',
             error: null,
             pictureFile: null,
-            uploadAttachment: {}
+            attachmentUpload: {}
         };
     },
 
@@ -47,15 +48,15 @@ const AddTicket = React.createClass({
           category: this.state.category
         };
 
-        const uploadAttachment = (ticketId) => {
+        const attachmentUpload = (ticketId) => {
             if (!this.state.pictureFile) {
               return;
             }
 
             this.setState(oldState => {
               return {
-                uploadingAttachment: {
-                  ...oldState.uploadingAttachment,
+                attachmentUpload: {
+                  ...oldState.attachmentUpload,
                   uploading: true
                 }
               };
@@ -73,8 +74,8 @@ const AddTicket = React.createClass({
               cache: false,
               error: (jqhxr, error, message) => this.setState(oldState => {
                 return {
-                  uploadingAttachment: {
-                    ...oldState.uploadingAttachment,
+                  attachmentUpload: {
+                    ...oldState.attachmentUpload,
                     uploading: false,
                     error: message
                   }
@@ -82,8 +83,8 @@ const AddTicket = React.createClass({
               }),
               success: () => this.setState(oldState => {
                 return {
-                  uploadAttachment: {
-                    ...oldState.uploadAttachment,
+                  attachmentUpload: {
+                    ...oldState.attachmentUpload,
                     uploading: false,
                     uploaded: true
                   }
@@ -98,7 +99,7 @@ const AddTicket = React.createClass({
             data: newTicket,
             success: ticketId => {
               this.showPanel(5);
-              uploadAttachment(ticketId);
+              attachmentUpload(ticketId);
             },
             error: (jqhxr, error, message) => this.setState({error: message})
         });
@@ -336,6 +337,9 @@ const AddTicket = React.createClass({
                         steps={this.state.stepCount}
                     />
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt harum, cupiditate ipsum, excepturi at alias explicabo sapiente repudiandae, recusandae eligendi sequi assumenda fugiat ratione consequuntur aliquam inventore! Saepe, doloribus, aut.</p>
+                    <AttachmentUpload
+                        status={this.state.attachmentUpload}
+                    />
                     <button
                         className="button button-red navigate button-center"
                         onClick={this.reset}
