@@ -6,6 +6,8 @@ use AppBundle\Entity\Comment;
 use AppBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class CommentsController extends BaseAdminController
 {
@@ -14,17 +16,28 @@ class CommentsController extends BaseAdminController
      *
      * @return Response
      */
-    public function indexAction($id)
+    public function indexAction(Request $request, $id)
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment = new Comment();
+            $comment->setCreated(new \DateTime());
+            $comment->setDescription($form->getData()->description);
+            $comment->setTicket($this->getDoctrine()
+                ->getRepository('AppBundle\Entity\Ticket')
+                ->find($id));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comment);
+            $em->flush();
+        }
+
         $comments = $this->getDoctrine()
             ->getRepository('AppBundle\Entity\Comment')
             ->findByTicket($id);
-
-        if(null === $comments) {
-            throw $this->createNotFoundException();
-        }
-
-        $form = $this->createForm(CommentType::class, new Comment());
 
         return $this->render('admin/comments/index.html.twig', array(
             'comments' => $comments,
