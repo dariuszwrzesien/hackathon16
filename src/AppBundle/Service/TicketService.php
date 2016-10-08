@@ -31,6 +31,16 @@ class TicketService
     }
 
     /**
+     * @param int $id
+     *
+     * @return Ticket
+     */
+    public function getTicketById(int $id): Ticket
+    {
+        return $this->getTicket($id);
+    }
+
+    /**
      * @param int $ticketId
      */
     public function startProgressOnTicket(int $ticketId)
