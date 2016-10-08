@@ -32,7 +32,7 @@ const TakePicture = React.createClass({
   render () {
     return (
       <div>
-        <label htmlFor="takePicture">{this.state.imageUrl.length ? 'Zmień obrazek' : 'Dołącz obrazek'}{!this.state.displayImage ? this.state.fileName : ''}</label>
+        <label className="button button-red button-center" htmlFor="takePicture">{this.state.imageUrl.length ? 'Zmień obrazek' : 'Dołącz obrazek'}{!this.state.displayImage ? this.state.fileName : ''}</label>
         <input
           accept="image/*"
           id="takePicture"
@@ -41,7 +41,7 @@ const TakePicture = React.createClass({
           style={{display: 'none'}}
           type="file"
         />
-        { this.state.displayImage ? <img src={this.state.imageUrl} style={{maxHeight: '200px'}} /> : null }
+        { this.state.displayImage ? <img src={this.state.imageUrl} className="img-responsive" /> : null }
       </div>
     );
   }
