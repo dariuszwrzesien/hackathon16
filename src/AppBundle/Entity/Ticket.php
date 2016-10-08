@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use AppBundle\TicketRepository;
-use ArrayObject;
 use Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -95,6 +94,7 @@ class Ticket
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->attachments = new ArrayCollection();
     }
 
     /**
@@ -288,11 +288,11 @@ class Ticket
     /**
      * Set attachments
      *
-     * @param ArrayObject $attachments
+     * @param ArrayCollection $attachments
      *
      * @return Ticket
      */
-    public function setAttachments(ArrayObject $attachments)
+    public function setAttachments(ArrayCollection $attachments)
     {
         $this->attachments = $attachments;
 
@@ -302,7 +302,7 @@ class Ticket
     /**
      * Get attachments
      *
-     * @return ArrayObject
+     * @return ArrayCollection
      */
     public function getAttachments()
     {
