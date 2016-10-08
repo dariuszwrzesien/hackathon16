@@ -18,3 +18,5 @@
 node_modules/
 /web/app-front/
 npm-debug.log
+composer-setup.php
+composer.phar

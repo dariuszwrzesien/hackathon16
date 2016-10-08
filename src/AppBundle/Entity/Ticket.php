@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\TicketRepository;
-use ArrayObject;
+use Doctrine\Common\Collections\ArrayCollection;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -67,6 +67,11 @@ class Ticket
     private $category;
 
     /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="ticket")
+     */
+    private $comments;
+
+    /**
      * @ORM\OneToMany(targetEntity="Attachment", mappedBy="ticket")
      */
     private $attachments;
@@ -84,6 +89,11 @@ class Ticket
     public function getId()
     {
         return $this->id;
+    }
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -248,6 +258,30 @@ class Ticket
     public function getStatusName()
     {
         return Status::getStatusName($this->getStatus());
+    }
+
+    /**
+     * Set comments
+     *
+     * @param ArrayCollection $comments
+     *
+     * @return Ticket
+     */
+    public function setComments(ArrayCollection $comments)
+    {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return ArrayCollection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 
     /**
