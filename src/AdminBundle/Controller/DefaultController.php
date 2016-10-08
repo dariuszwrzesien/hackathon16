@@ -26,7 +26,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/admin/tickets", name="admin")
+     * @Route("/admin/tickets", name="adminTickets")
      */
     public function ticketsAction()
     {
