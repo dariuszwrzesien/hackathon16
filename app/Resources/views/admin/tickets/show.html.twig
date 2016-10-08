@@ -12,12 +12,17 @@
                 <strong>Category:</strong> {{ ticket.getCategoryName() }}
             </p>
             <p>
+                <strong>Aktualny status:</strong> {{ ticket.getStatusName() }}
+            </p>
+            <p>
                 <strong>Opis:</strong> {{ ticket.getDescription() }}
             </p>
+            {% if ticket.getAttachments().count() > 0 %}
             <p>
                 <strong>Zdjęcie:</strong> <br />
                 <img src="{{ asset(ticket.getAttachments()[0].getFullPath()) }}" class="img-responsive" style="max-width: 300px;">
             </p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
