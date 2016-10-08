@@ -2,7 +2,7 @@ import React from 'react';
 import DOM from 'react-dom';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 
-import '../sass/main.scss';
+import '../less/main.less';
 import AddTicket from './addTicket';
 
 const App = React.createClass({
@@ -19,7 +19,7 @@ const App = React.createClass({
                   <span className="sr-only">Toggle navigation</span>
                   <i className="fa fa-bars"></i>
                 </button>
-                <a className="navbar-brand" href="#">Gimme Me a name : )</a>
+                <a className="navbar-brand" href="#">FixMyCity</a>
               </div>
             </div>
           </nav>
@@ -27,7 +27,7 @@ const App = React.createClass({
           <footer>
             <div className="container">
               <div className="col-md-12">
-                <p>Hackathon 2016</p>
+                <p>FixMyCity, Future Processing 2016</p>
                 <p><small>All rights reserved</small></p>
               </div>
             </div>

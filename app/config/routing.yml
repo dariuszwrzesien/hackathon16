@@ -2,17 +2,13 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 tickets:
-    resource: "@AppBundle/Controller/TicketsController.php"
+    resource: "@AppBundle/Controller/Api/TicketsController.php"
     type:     rest
     prefix:   /api
 categories:
-    resource: "@AppBundle/Controller/CategoriesController.php"
+    resource: "@AppBundle/Controller/Api/CategoriesController.php"
     type:     rest
     prefix:   /api
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc
-admin:
-    resource: "@AdminBundle/Controller"
-    type:     annotation
-

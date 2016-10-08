@@ -76,6 +76,10 @@ class Ticket
      */
     private $attachments;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Notifier",  mappedBy="ticket", cascade={"all"}))
+     */
+    private $notifier;
 
     /**
      * Get id
@@ -302,6 +306,25 @@ class Ticket
     public function getAttachments()
     {
         return $this->attachments;
+    }
+
+    /**
+     * @param Notifier $notifier
+     * @return $this
+     */
+    public function setNotifier(Notifier $notifier)
+    {
+        $this->notifier = $notifier;
+
+        return $this;
+    }
+
+    /**
+     * @return Notifier
+     */
+    public function getNotifier()
+    {
+        return $this->notifier;
     }
 }
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Category;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations\View;
 
-class CategoriesController extends FOSRestController
+class CategoriesController extends BaseApiController
 {
     /**
      * @ApiDoc(
@@ -24,9 +24,6 @@ class CategoriesController extends FOSRestController
      */
     public function getCategoriesAction()
     {
-        $repository = $this->getDoctrine()->getRepository('AppBundle\Entity\Category');
-        $categories = $repository->findAll();
-
-        return $categories;
+        return $this->getCategoryService()->getAllCategories();
     }
 }
