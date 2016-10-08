@@ -23,8 +23,8 @@ security:
         target: homepage
 
   access_control:
-    - { path: ^/admin, roles: ROLE_WORKER }
     - { path: ^/admin/users, roles: ROLE_ADMIN }
+    - { path: ^/admin, roles: ROLE_WORKER }
 
   role_hierarchy:
     ROLE_WORKER: ROLE_USER
