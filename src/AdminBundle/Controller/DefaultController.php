@@ -12,11 +12,21 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('admin/index.html.twig');
+        $templateParams = [];
+        $mockedChartData = [
+            ['category' => 'Kategoria 1', 'percent' => 23],
+            ['category' => 'Inna kategoria', 'percent' => 10],
+            ['category' => 'Jeszcze inna', 'percent' => 45],
+            ['category' => 'Pozostałe', 'percent' => 22],
+        ];
+
+        $templateParams['tickets_stats'] = $mockedChartData;
+
+        return $this->render('admin/index.html.twig', $templateParams);
     }
 
     /**
-     * @Route("/admin/tickets", name="admin")
+     * @Route("/admin/tickets", name="adminTickets")
      */
     public function ticketsAction()
     {
