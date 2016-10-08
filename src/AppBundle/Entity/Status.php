@@ -7,11 +7,17 @@ class Status {
     const IN_PROGRESS = 2;
     const CLOSED = 3;
     const CANCELED = 4;
+
     static private $statusNames = [
         self::WAITING => 'waiting',
         self::IN_PROGRESS => 'in progress',
         self::CANCELED => 'canceled',
         self::CLOSED => 'closed',
+    ];
+
+    static private $actionNames = [
+        self::WAITING => 'Start progress',
+        self::IN_PROGRESS => 'Done'
     ];
 
     static private $allowedTransitions = [
@@ -26,6 +32,7 @@ class Status {
      *
      * @param int|null $oldStatus
      * @param int $newStatus
+     *
      * @return bool
      */
     static public function isTransitionAllowed($oldStatus, int $newStatus)
@@ -45,15 +52,46 @@ class Status {
     }
 
     /**
-     * @param $statusId
+     * @param int $statusId
+     *
      * @return string
      */
-    static public function getStatusName($statusId)
+    static public function getStatusName(int $statusId)
     {
-        if (array_key_exists($statusId, self::$statusNames)) {
-            return self::$statusNames[$statusId];
-        }
-        else {
+        return self::getName($statusId, self::$statusNames);
+    }
+
+    /**
+     * @param int $statusId
+     *
+     * @return string
+     */
+    static public function getActionName(int $statusId)
+    {
+        return self::getName($statusId, self::$actionNames);
+    }
+
+    /**
+     * @param int $statusId
+     *
+     * @return int
+     */
+    static public function getNextAction(int $statusId)
+    {
+        return $statusId + 1;
+    }
+
+    /**
+     * @param int $statusId
+     * @param array $type
+     *
+     * @return string
+     */
+    static private function getName(int $statusId, array $type)
+    {
+        if (array_key_exists($statusId, $type)) {
+            return $type[$statusId];
+        } else {
             return 'unknown';
         }
     }

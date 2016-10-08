@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Tickets</h1>
 
-    <table id="datatable" class="table table-striped jambo_table bulk_action">
+    <table id="tickets-list" class="table table-striped jambo_table bulk_action">
         <thead>
             <tr class="headings">
                 <th class="column-title">Created at</th>
@@ -14,10 +14,27 @@
             </tr>
         </thead>
         <tbody>
+        {% for ticket in tickets %}
+            <tr id="ticket-{{ ticket.getId() }}">
+                <td>{{ ticket.getCreated()|date("d-m-Y H:i") }}</td>
+                <td>{{ ticket.getCategoryName() }}</td>
+                <td>{{ ticket.getDescription() }}</td>
+                <td>{{ ticket.getStatusName() }}</td>
+                <td>
+                {% if ticket.isActive() %}
+                    <a class="btn btn-round btn-danger" href="{{ path('adminCloseTicket', {'ticketId': ticket.getId()}) }}">
+                        zamknij
+                    </a>
+                    <a class="btn btn-round btn-success" href="{{ path('adminUpdateTicket', {'ticketId': ticket.getId(), 'status': ticket.getNextAction()}) }}">
+                        {{ ticket.getActionName() }}
+                    </a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
     {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('admin/js/jquery.datatables.min.js') }}"></script>
-    <script src="{{ asset('admin/js/tickets.js') }}"></script>
 {% endblock %}

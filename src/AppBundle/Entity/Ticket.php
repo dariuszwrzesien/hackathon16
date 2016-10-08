@@ -247,6 +247,30 @@ class Ticket
     }
 
     /**
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->getStatus() !== Status::CLOSED && $this->getStatus() !== Status::CANCELED;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNextAction()
+    {
+        return Status::getNextAction($this->getStatus());
+    }
+
+    /**
+     * @return string
+     */
+    public function getActionName()
+    {
+        return Status::getActionName($this->getStatus());
+    }
+
+    /**
      * Set attachments
      *
      * @param ArrayObject $attachments
