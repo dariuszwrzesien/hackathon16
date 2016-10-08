@@ -22,15 +22,15 @@ class Ticket
     const CANCELED = 4;
 
     static private $statusNames = [
-        self::WAITING => 'waiting',
-        self::IN_PROGRESS => 'in progress',
-        self::CANCELED => 'canceled',
-        self::CLOSED => 'closed',
+        self::WAITING => 'nowe',
+        self::IN_PROGRESS => 'w trakcie',
+        self::CANCELED => 'odrzucone',
+        self::CLOSED => 'zakończone',
     ];
 
     static private $actionNames = [
-        self::WAITING => 'Start progress',
-        self::IN_PROGRESS => 'Done'
+        self::WAITING => 'rozpocznij',
+        self::IN_PROGRESS => 'zakończ'
     ];
 
     static private $allowedTransitions = [
@@ -314,7 +314,7 @@ class Ticket
      */
     public function isActive()
     {
-        return !$this->isClosed() && !$this->isCanceled();
+        return !($this->isClosed() || $this->isCanceled());
     }
 
     /**
@@ -330,7 +330,7 @@ class Ticket
      */
     public function isCanceled()
     {
-        return $this->getStatus() !== self::CANCELED;
+        return $this->getStatus() === self::CANCELED;
     }
 
     /**
@@ -427,7 +427,7 @@ class Ticket
         if (array_key_exists($statusId, $arrayType)) {
             return $arrayType[$statusId];
         } else {
-            return 'unknown';
+            return 'nieznane';
         }
     }
 }
