@@ -19,11 +19,10 @@ class TicketsController extends BaseAdminController
      */
     public function indexAction($page = 1)
     {
-        $tickets = $this->getTicketsService()->getAllTickets($page);
         return $this->render('admin/tickets/index.html.twig', [
-            'tickets' => $tickets,
+            'tickets' => $tickets = $this->getTicketsService()->getAllTickets($page),
             'limit' => TicketService::TICKET_LIMIT,
-            'maxPages' => ceil(count($tickets) / TicketService::TICKET_LIMIT),
+            'maxPages' => ceil($this->getTicketsService()->countAllTickets() / TicketService::TICKET_LIMIT),
             'thisPage' => $page
         ]);
     }

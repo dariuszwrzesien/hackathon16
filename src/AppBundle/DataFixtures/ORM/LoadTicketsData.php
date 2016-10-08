@@ -8,42 +8,39 @@ use AppBundle\Entity\Location;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadCommentsData implements FixtureInterface
+class LoadTicketsData implements FixtureInterface
 {
+    const TICKETS_AMOUNT = 200;
+
     /**
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        $timeStamp = new \DateTime();
-
-        $prefillComments = [
-            1 => 'Komentarz pierwszy',
-            2 => 'Komentarz drugi',
-            3 => 'Komentarz trzeci',
-            4 => 'Komentarz czwarty'
-        ];
+        $dateTime = new \DateTime();
 
         $category = new Category();
-        $category->setName('testComment');
+        $category->setName('testTicket');
         $manager->persist($category);
 
         $location = new Location();
         $location->setLatitude(123);
         $location->setLongitude(123);
 
-        $ticket = new Ticket();
-        $ticket->setCategory($category);
-        $ticket->setDescription('test description');
-        $ticket->setCreated($timeStamp);
-        $ticket->setUpdated($timeStamp);
-        $ticket->setStatus(Ticket::WAITING);
-        $ticket->setLocation($location);
-        $manager->persist($ticket);
+        for ($i = 1; $i < self::TICKETS_AMOUNT; $i++) {
+            $timeStamp = $dateTime->add(new \DateInterval('PT'.$i.'M'));
 
-        foreach ($prefillComments as $comId => $comDesc) {
+            $ticket = new Ticket();
+            $ticket->setCategory($category);
+            $ticket->setDescription('test ticket description '.$i);
+            $ticket->setCreated($timeStamp);
+            $ticket->setUpdated($timeStamp);
+            $ticket->setStatus(Ticket::WAITING);
+            $ticket->setLocation($location);
+            $manager->persist($ticket);
+
             $comment = new Comment();
-            $comment->setDescription($comDesc);
+            $comment->setDescription('test comment description'.$i);
             $comment->setTicket($ticket);
             $comment->setCreated($timeStamp);
             $manager->persist($comment);

@@ -34,6 +34,14 @@ class TicketService
     }
 
     /**
+     * @return int
+     */
+    public function countAllTickets()
+    {
+        return count($this->registry->getRepository('AppBundle\Entity\Ticket')->findBy([]));
+    }
+
+    /**
      * @param int $ticketId
      */
     public function startProgressOnTicket(int $ticketId)
