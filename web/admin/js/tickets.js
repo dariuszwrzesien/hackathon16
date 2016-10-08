@@ -46,8 +46,12 @@
 
     function createComments (comments) {
         var button = '';
-        button += prepareButton(comments, 'btn-info', 4);
+        button += prepareRedirectButton(comments, 'btn-info btn-comment', 4, "/admin/comments/123");
         return button
+    }
+
+    function prepareRedirectButton (text, className, statusId, href) {
+        return '<a href="' + href +'" class="btn btn-round ' + className + '" data-status-id=' + statusId + '>' + text + '</a>';
     }
 
     function prepareButton (text, className, statusId) {
