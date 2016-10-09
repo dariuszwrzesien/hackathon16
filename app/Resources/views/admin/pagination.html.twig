@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col-sm-4 text-left">
+        {% if current > 1 %}
+            <a href="?page={{ current - 1 }}" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i> Poprzednia strona</a>
+        {% endif %}
+    </div>
+    <div class="col-sm-4 text-center">Strona {{ current }} z {{ total }}</div>
+    <div class="col-sm-4 text-right">
+        {% if current < total %}
+            <a href="?page={{ current + 1 }}" class="btn btn-default">Następna strona <i class="glyphicon glyphicon-chevron-right"></i></a>
+        {% endif %}
+    </div>
+</div>
