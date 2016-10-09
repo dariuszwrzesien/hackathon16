@@ -2,7 +2,6 @@
 
 {% block body %}
     <h1>Zgłoszenia</h1>
-
     <table id="tickets-list" class="table table-striped jambo_table bulk_action">
         <thead>
             <tr class="headings">
@@ -16,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for ticket in tickets %}
+        {% for ticket in tickets.items %}
             <tr id="ticket-{{ ticket.getId() }}">
                 <td>{{ ticket.getCreated()|date("d-m-Y H:i") }}</td>
                 <td>{{ ticket.getCategoryName() }}</td>
@@ -50,27 +49,10 @@
         {% endfor %}
         </tbody>
     </table>
-    {% if maxPages > 1 %}
-        <ul class="pagination pagination-sm">
-            {# `«` arrow  #}
-            <li {{ thisPage == 1 ? 'class="disabled"' }}>
-                <a href="{{ path('adminTickets', {page: thisPage-1 < 1 ? 1 : thisPage-1}) }}">«</a>
-            </li>
-
-            {# Render each page number #}
-            {% for i in 1..maxPages %}
-                <li {{ thisPage == i ? 'class="active"' }}>
-                    <a href="{{ path('adminTickets', {page: i}) }}">{{ i }}</a>
-                </li>
-            {% endfor %}
-
-            {# `»` arrow #}
-            <li {{ thisPage == maxPages ? 'class="disabled"' }}>
-                <a href="{{ path('adminTickets', {page: thisPage+1 <= maxPages ? thisPage+1 : thisPage}) }}">»</a>
-            </li>
-        </ul>
+    {% if tickets.items %}
+        {% include 'admin/pagination.html.twig' with {'current': tickets.currentPage, 'total': tickets.totalPages} only %}
     {% endif %}
-    {% endblock %}
+{% endblock %}
 {% block javascripts %}
     <script src="{{ asset('admin/js/jquery.datatables.min.js') }}"></script>
 {% endblock %}
