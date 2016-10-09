@@ -7,28 +7,31 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Embeddable
  */
-class Location {
+class Location
+{
     /**
-     * @ORM\Column(type="decimal",precision=18,scale=12)
+     * @ORM\Column(type="decimal", precision=18, scale=12)
      */
     public $latitude;
 
     /**
-     * @ORM\Column(type="decimal",precision=18,scale=12)
+     * @ORM\Column(type="decimal", precision=18, scale=12)
      */
     public $longitude;
 
     /**
      * @return float
      */
-    public function getLatitude() {
+    public function getLatitude()
+    {
         return $this->latitude;
     }
 
     /**
      * @return float
      */
-    public function getLongitude() {
+    public function getLongitude()
+    {
         return $this->longitude;
     }
 
@@ -36,7 +39,8 @@ class Location {
      * @param float $latitude
      * @return Location
      */
-    public function setLatitude($latitude) {
+    public function setLatitude($latitude)
+    {
         $this->latitude = $latitude;
 
         return $this;
@@ -46,7 +50,8 @@ class Location {
      * @param float $longitude
      * @return Location
      */
-    public function setLongitude($longitude) {
+    public function setLongitude($longitude)
+    {
         $this->longitude = $longitude;
 
         return $this;
