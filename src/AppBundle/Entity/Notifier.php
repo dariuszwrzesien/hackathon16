@@ -33,7 +33,7 @@ class Notifier
     private $email = '';
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $phone;
 
@@ -114,7 +114,7 @@ class Notifier
     }
 
     /**
-     * @return integer
+     * @return string
      */
     public function getPhone()
     {

@@ -19,7 +19,7 @@ const App = React.createClass({
                   <span className="sr-only">Toggle navigation</span>
                   <i className="fa fa-bars"></i>
                 </button>
-                <a className="navbar-brand" href="#">FixMyCity</a>
+                <a className="navbar-brand" href="#">HalloUrzond</a>
               </div>
             </div>
           </nav>

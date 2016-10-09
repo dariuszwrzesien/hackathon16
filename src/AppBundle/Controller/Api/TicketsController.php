@@ -11,8 +11,10 @@ use AppBundle\Form\TicketType;
 use DateTime;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations\View;
@@ -83,6 +85,11 @@ class TicketsController extends BaseApiController
     public function postTicketAction(Request $request)
     {
         $ticketData = $request->request->all();
+        $validateErrors = $this->validate(new TicketType($ticketData));
+
+        if ($validateErrors) {
+            return new JsonResponse($validateErrors, Response::HTTP_BAD_REQUEST);
+        }
 
         $ticket = new Ticket();
         $ticket->setCreated(new DateTime());
