@@ -10,7 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadTicketsData implements FixtureInterface
 {
-    const TICKETS_AMOUNT = 200;
+    const TICKETS_AMOUNT = 100;
 
     /**
      * @param ObjectManager $manager
@@ -28,7 +28,7 @@ class LoadTicketsData implements FixtureInterface
         $location->setLongitude(123);
 
         for ($i = 1; $i < self::TICKETS_AMOUNT; $i++) {
-            $timeStamp = $dateTime->add(new \DateInterval('PT'.$i.'M'));
+            $timeStamp = $dateTime->modify('1 minute');
 
             $ticket = new Ticket();
             $ticket->setCategory($category);
@@ -40,12 +40,14 @@ class LoadTicketsData implements FixtureInterface
             $manager->persist($ticket);
 
             $comment = new Comment();
-            $comment->setDescription('test comment description'.$i);
+            $comment->setDescription('test comment description '.$i);
             $comment->setTicket($ticket);
             $comment->setCreated($timeStamp);
             $manager->persist($comment);
+
+            $manager->flush();
         }
 
-        $manager->flush();
+
     }
 }

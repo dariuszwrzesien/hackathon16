@@ -44,7 +44,7 @@
         {% endfor %}
         </tbody>
     </table>
-    {#{% if maxPages > 1 %}#}
+    {% if maxPages > 1 %}
         <ul class="pagination pagination-sm">
             {# `«` arrow  #}
             <li {{ thisPage == 1 ? 'class="disabled"' }}>
@@ -63,7 +63,7 @@
                 <a href="{{ path('adminTickets', {page: thisPage+1 <= maxPages ? thisPage+1 : thisPage}) }}">»</a>
             </li>
         </ul>
-    {#{% endif %}#}
+    {% endif %}
     {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('admin/js/jquery.datatables.min.js') }}"></script>
