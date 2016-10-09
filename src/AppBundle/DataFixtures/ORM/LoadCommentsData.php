@@ -25,8 +25,7 @@ class LoadCommentsData implements FixtureInterface
         ];
 
         $category = new Category();
-        $category->setId(1000);
-        $category->setName('test');
+        $category->setName('testComment');
         $manager->persist($category);
 
         $location = new Location();
@@ -47,7 +46,6 @@ class LoadCommentsData implements FixtureInterface
             $comment->setDescription($comDesc);
             $comment->setTicket($ticket);
             $comment->setCreated($timeStamp);
-
             $manager->persist($comment);
         }
 

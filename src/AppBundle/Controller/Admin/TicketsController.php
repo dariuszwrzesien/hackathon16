@@ -3,24 +3,32 @@
 namespace AppBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class TicketsController extends BaseAdminController
 {
     /**
      * @Route("/admin/tickets", name="adminTickets")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $page = (int)$request->query->get('page', 1);
+
         return $this->render('admin/tickets/index.html.twig', [
-            'tickets' => $this->getTicketsService()->getAllTickets()
+            'tickets' => $this->getTicketsService()->getAllPaginatedTickets($page)
         ]);
     }
 
     /**
      * @Route("/admin/ticket/{ticketId}/show", name="adminShowTicket")
+     *
+     * @param int $ticketId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction($ticketId)
+    public function showAction(int $ticketId)
     {
         return $this->render('admin/tickets/show.html.twig', [
             'ticket' => $this->getTicketsService()->getTicketById($ticketId)
@@ -31,8 +39,7 @@ class TicketsController extends BaseAdminController
      * @Route("/admin/ticket/{ticketId}/start", name="adminStartProgressOnTicket")
      *
      * @param int $ticketId
-     *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function startProgressOnTicketAction(int $ticketId)
     {
@@ -44,8 +51,7 @@ class TicketsController extends BaseAdminController
      * @Route("/admin/ticket/{ticketId}/close", name="adminCloseTicket")
      *
      * @param int $ticketId
-     *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function closeTicket(int $ticketId)
     {
@@ -57,8 +63,7 @@ class TicketsController extends BaseAdminController
      * @Route("/admin/ticket/{ticketId}/cancel", name="adminCancelTicket")
      *
      * @param int $ticketId
-     *
-     * @return RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function cancelTicketAction(int $ticketId)
     {

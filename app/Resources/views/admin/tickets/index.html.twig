@@ -2,7 +2,6 @@
 
 {% block body %}
     <h1>Zgłoszenia</h1>
-
     <table id="tickets-list" class="table table-striped jambo_table bulk_action">
         <thead>
             <tr class="headings">
@@ -16,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for ticket in tickets %}
+        {% for ticket in tickets.items %}
             <tr id="ticket-{{ ticket.getId() }}">
                 <td>{{ ticket.getCreated()|date("d-m-Y H:i") }}</td>
                 <td>{{ ticket.getCategoryName() }}</td>
@@ -50,4 +49,10 @@
         {% endfor %}
         </tbody>
     </table>
+    {% if tickets.items %}
+        {% include 'admin/pagination.html.twig' with {'current': tickets.currentPage, 'total': tickets.totalPages} only %}
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('admin/js/jquery.datatables.min.js') }}"></script>
 {% endblock %}

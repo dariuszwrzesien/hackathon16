@@ -3,6 +3,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Ticket;
+use AppBundle\PaginatedResults;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
@@ -11,23 +12,41 @@ class TicketService
     /**
      * @var Registry
      */
-    protected $registry;
+    protected $doctrine;
 
     /**
-     * @param Registry $registry
+     * @param Registry $doctrine
      */
-    public function __construct(Registry $registry)
+    public function __construct(Registry $doctrine)
     {
-        $this->registry = $registry;
+        $this->doctrine = $doctrine;
     }
 
     /**
-     * @return array
+     * @param int $page
+     * @param int $limit
+     * @return PaginatedResults
      */
-    public function getAllTickets()
+    public function getAllPaginatedTickets(int $page = 1, int $limit = 25) : PaginatedResults
     {
-        $repository = $this->registry->getRepository('AppBundle\Entity\Ticket');
-        return $repository->findBy([], ['created' => 'DESC']);
+        $repository = $this->doctrine->getRepository(Ticket::class);
+
+        $items = $repository->findBy([], ['created' => 'DESC'], $limit, $limit * ($page - 1));
+        $total = $this->getCountAllTicket();
+
+        return new PaginatedResults($items, $total, $page, $limit);
+    }
+
+    /**
+     * @return int
+     */
+    public function getCountAllTicket() : int
+    {
+        return $this->doctrine->getRepository(Ticket::class)
+            ->createQueryBuilder('ticket')
+            ->select('COUNT(ticket)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     /**
@@ -83,7 +102,7 @@ class TicketService
      */
     private function getTicket(int $id): Ticket
     {
-        $repository = $this->registry->getRepository('AppBundle\Entity\Ticket');
+        $repository = $this->doctrine->getRepository(Ticket::class);
         $ticket = $repository->findOneById($id);
         if (!$ticket) {
             throw new EntityNotFoundException(
@@ -101,7 +120,7 @@ class TicketService
      */
     private function saveTicket($ticket)
     {
-        $em = $this->registry->getManager();
+        $em = $this->doctrine->getManager();
         $em->persist($ticket);
         $em->flush();
     }
