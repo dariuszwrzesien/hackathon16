@@ -111,6 +111,9 @@ class Ticket
         return $this->id;
     }
 
+    /**
+     * Ticket constructor.
+     */
     public function __construct()
     {
         $this->comments = new ArrayCollection();
