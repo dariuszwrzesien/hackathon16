@@ -23,6 +23,16 @@ class TicketsController extends BaseAdminController
     }
 
     /**
+     * @Route("/admin/ticket/{ticketId}/show", name="adminShowTicket")
+     */
+    public function showAction($ticketId)
+    {
+        return $this->render('admin/tickets/show.html.twig', [
+            'ticket' => $this->getTicketsService()->getTicketById($ticketId)
+        ]);
+    }
+
+    /**
      * @Route("/admin/ticket/{ticketId}/start", name="adminStartProgressOnTicket")
      *
      * @param int $ticketId

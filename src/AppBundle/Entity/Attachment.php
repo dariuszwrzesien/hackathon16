@@ -112,4 +112,12 @@ class Attachment {
     {
         return $this->path;
     }
+
+    /**
+     * @return string
+     */
+    public function getFullPath()
+    {
+        return $this->getPath() . '/' . $this->getFileName();
+    }
 }

@@ -11,6 +11,7 @@
                 <th class="column-title">Status</th>
                 <th class="column-title">Liczba komentarzy</th>
                 <th class="column-title"></th>
+                <td class="column-title"></td>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +39,11 @@
                         </a>
                     {% endif %}
                 {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-round btn-info" href="{{ path('adminShowTicket', {'ticketId': ticket.getId()}) }}">
+                        zobacz szczegóły
+                    </a>
                 </td>
             </tr>
         {% endfor %}
