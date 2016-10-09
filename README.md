@@ -1,10 +1,14 @@
-# Hackathon 2016
+# HalloUrzond
 
-## HOW TO START
+[![Build Status](https://api.travis-ci.org/hallourzond/hallourzond.svg?branch=master)](https://travis-ci.org/hallourzond/hallourzond) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/hallourzond/hallourzond/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/hallourzond/hallourzond/?branch=master)
+
+## HOW TO START USING VAGRANT
+
+*Work in progress...*
 
 ```
 cd /var/www
-git clone git@vm-git.fp.lan:dwrzesien/vm-hackathon16.git
+git clone git@github.com:hallourzond/hallourzond.git
 cd /var/www/vm-hackathon16
 vagrant up
 cd /var/www/vm-hackathon16/hackathon16
