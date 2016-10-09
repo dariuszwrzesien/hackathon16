@@ -11,9 +11,9 @@ abstract class BaseApiController extends FOSRestController
 
     /**
      * @param $type
-     * @return \Symfony\Component\Validator\ConstraintViolationList
+     * @return array
      */
-    public function validate($type)
+    public function validate($type) : array
     {
         /**
          * @var $violations \Symfony\Component\Validator\ConstraintViolationList
