@@ -32,12 +32,21 @@ class TicketService
         $repository = $this->doctrine->getRepository(Ticket::class);
 
         $items = $repository->findBy([], ['created' => 'DESC'], $limit, $limit * ($page - 1));
-        $total = $repository->createQueryBuilder('ticket')
+        $total = $this->getCountAllTicket();
+
+        return new PaginatedResults($items, $total, $page, $limit);
+    }
+
+    /**
+     * @return int
+     */
+    public function getCountAllTicket() : int
+    {
+        return $this->doctrine->getRepository(Ticket::class)
+            ->createQueryBuilder('ticket')
             ->select('COUNT(ticket)')
             ->getQuery()
             ->getSingleScalarResult();
-
-        return new PaginatedResults($items, $total, $page, $limit);
     }
 
     /**
