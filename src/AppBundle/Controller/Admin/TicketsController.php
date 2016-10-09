@@ -24,8 +24,11 @@ class TicketsController extends BaseAdminController
 
     /**
      * @Route("/admin/ticket/{ticketId}/show", name="adminShowTicket")
+     *
+     * @param int $ticketId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction($ticketId)
+    public function showAction(int $ticketId)
     {
         return $this->render('admin/tickets/show.html.twig', [
             'ticket' => $this->getTicketsService()->getTicketById($ticketId)
