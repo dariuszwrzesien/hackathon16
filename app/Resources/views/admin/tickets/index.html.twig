@@ -50,7 +50,7 @@
         </tbody>
     </table>
     {% if tickets.items %}
-        {% include 'admin/pagination.html.twig' with {'current': tickets.currentPage, 'total': tickets.totalPages} only %}
+        {% include 'admin/bootstrap-pagination.html.twig' with {'current': tickets.currentPage, 'total': tickets.totalPages} only %}
     {% endif %}
 {% endblock %}
 {% block javascripts %}
