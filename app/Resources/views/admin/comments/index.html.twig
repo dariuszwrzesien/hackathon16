@@ -1,7 +1,9 @@
 {% extends 'admin.html.twig' %}
 
 {% block body %}
-    <h1>Comments</h1>
+    <h2>Opis zgłoszenia</h2>
+        {{ ticket.description }}
+    <h2>Komentarze</h2>
 
     <table id="datatable" class="table table-striped">
         <thead>
@@ -20,7 +22,16 @@
                 {% endfor %}
         </tbody>
     </table>
-    {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_errors(form) }}
+        <div class="form-group">
+            {{ form_widget(form.description, {'attr': {'placeholder': 'Wpisz komentarz', 'class': 'form-control', 'row': '5'}}) }}
+            {{ form_errors(form.description, {'attr': {'class': 'alert alert-info', 'role': 'alert'}}) }}
+        </div>
+        <div>
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}, 'label': 'Dodaj komentarz' }) }}
+        </div>
+    {{ form_end(form) }}
 {% endblock %}
 {% block javascripts %}
 
