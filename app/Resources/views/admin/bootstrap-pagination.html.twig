@@ -3,19 +3,19 @@
         <ul class="pagination pagination-sm">
             {% if current != 1 %}
             <li>
-                <a href="{{ path('adminTickets', {page: current-1 < 1 ? 1 : current-1}) }}">«</a>
+                <a href="?page={{ current - 1 }}">«</a>
             </li>
             {% endif %}
 
             {% for i in 1..total %}
                 <li {{ current == i ? 'class="active"' }}>
-                    <a href="{{ path('adminTickets', {page: i}) }}">{{ i }}</a>
+                    <a href="?page={{ i }}">{{ i }}</a>
                 </li>
             {% endfor %}
 
             {% if current != total %}
             <li>
-                <a href="{{ path('adminTickets', {page: current+1 <= total ? current+1 : current}) }}">»</a>
+                <a href="?page={{ current + 1 }}">»</a>
             </li>
             {% endif %}
         </ul>
