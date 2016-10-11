@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use AppBundle\Entity\Ticket;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -24,6 +25,7 @@ class Comment {
     public $ticket;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=1000)
      */
     public $description;

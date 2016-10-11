@@ -21,18 +21,13 @@ class CommentService
     }
 
     /**
+     * @param int $ticketId
      * @return array
      */
     public function getCommentsByTicketId($ticketId)
     {
         $repository = $this->registry->getRepository('AppBundle\Entity\Comment');
-        $comments = $repository->findByTicket($ticketId);
-        if (!$comments) {
-            throw new EntityNotFoundException(
-                'No comments found for ticket id '.$ticketId
-            );
-        }
-        return $comments;
+        return $repository->findByTicket($ticketId);
     }
 
     /**
